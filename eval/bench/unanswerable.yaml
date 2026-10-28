@@ -1,0 +1,34 @@
+# Out-of-scope questions. A grounded assistant should refuse these: the corpus (geospatial
+# research abstracts, technical documentation, dataset descriptions) does not contain the answer.
+# Half are clearly off-topic; half are near the domain but ask for facts the corpus cannot hold
+# (prices, schedules, personal details, events after the snapshot).
+- What is the boiling point of ethanol at sea level in degrees Celsius?
+- Who won the men's singles title at Wimbledon in 2019?
+- What is the recommended daily intake of vitamin D for adults?
+- How many symphonies did Anton Bruckner complete?
+- What is the capital of Mongolia?
+- Which enzyme breaks down lactose in the human gut?
+- How do I reset the password of a Netgear home router?
+- What interest rate did the European Central Bank set in March 2023?
+- How long should a soft-boiled egg be cooked?
+- What is the plot of Gabriel García Márquez's novel One Hundred Years of Solitude?
+- Which football club did Johan Cruyff coach between 1988 and 1996?
+- What is the half-life of carbon-14 in years?
+- What dosage of ibuprofen is safe for a child weighing 20 kg?
+- How many seats does the Tunisian Assembly of the Representatives of the People have?
+- What was the closing price of Maxar Technologies stock on 1 March 2022?
+- How much does a single Sentinel-2 satellite cost to build in euros, according to its manufacturer's invoice?
+- What is the name of the current head of the Ichkeul National Park visitor centre?
+- What time does the Bizerte–Tunis train leave on Sunday mornings?
+- How many tourists visited Lake Ichkeul in the summer of 2023?
+- What is the monthly salary of a junior GIS analyst in Tunis?
+- Which restaurant in Delft serves the best stroopwafels?
+- What was the exact rainfall in Bizerte on 14 January 2025 in millimetres?
+- What is the phone number of the Dutch Kadaster customer service desk?
+- What is the licence fee for an ArcGIS Pro Advanced seat in Tunisia in 2026?
+- Who will chair the ISPRS Congress scheduled for 2030?
+- What colour is the logo of the European Space Agency's Sentinel-2C mission patch?
+- How many employees does the Tunisian National Mapping Agency (OTC) have?
+- What was the attendance at the 2024 FOSS4G Europe conference dinner?
+- Which hotel near Lake Ichkeul has the highest customer rating?
+- How many cups of coffee are served per day in the canteen of ESA's ESRIN centre in Frascati?
