@@ -1,0 +1,200 @@
+# GeoRAG seed glossary — CC BY 4.0, Emna Saada.
+# Entity types: method, sensor (sensor or platform), dataset, product (index or derived
+# product), application, place, standard (file format, specification or software).
+# `aliases` are matched in the corpus as whole words; all-caps aliases are case-sensitive.
+
+# ---------------------------------------------------------------- methods
+- {id: unet, label: U-Net, type: method, broader: deep_learning, aliases: [U-Net, UNet, U Net], definition: Encoder–decoder convolutional network with skip connections; the standard baseline for semantic segmentation of imagery.}
+- {id: random_forest, label: Random forest, type: method, aliases: [random forest, random forests, RF classifier], definition: Ensemble of decision trees; a robust pixel- and object-based classifier for land cover.}
+- {id: svm, label: Support vector machine, type: method, aliases: [support vector machine, support vector machines, SVM], definition: Margin-based classifier widely used for multispectral and hyperspectral classification.}
+- {id: cnn, label: Convolutional neural network, type: method, broader: deep_learning, aliases: [convolutional neural network, convolutional neural networks, CNN, CNNs], definition: Neural network built from learned convolution filters; the backbone of most image models.}
+- {id: vit, label: Vision transformer, type: method, broader: deep_learning, aliases: [vision transformer, vision transformers, ViT], definition: Transformer that processes an image as a sequence of patches.}
+- {id: transformer, label: Transformer, type: method, aliases: [transformer, transformers, self-attention], definition: Attention-based architecture used for sequences, images and point clouds.}
+- {id: swin, label: Swin Transformer, type: method, aliases: [Swin Transformer, Swin], definition: Hierarchical vision transformer with shifted windows.}
+- {id: deeplab, label: DeepLab, type: method, aliases: [DeepLab, DeepLabv3, DeepLabv3+], definition: Segmentation network family using atrous convolution and spatial pyramid pooling.}
+- {id: mask_rcnn, label: Mask R-CNN, type: method, aliases: [Mask R-CNN, Mask RCNN], definition: Two-stage instance segmentation network.}
+- {id: yolo, label: YOLO, type: method, aliases: [YOLO, YOLOv5, YOLOv8], definition: Single-stage real-time object detector.}
+- {id: gan, label: Generative adversarial network, type: method, aliases: [generative adversarial network, generative adversarial networks, GAN, GANs], definition: Generator–discriminator pair trained adversarially; used for super-resolution and image translation.}
+- {id: diffusion_model, label: Diffusion model, type: method, aliases: [diffusion model, diffusion models, denoising diffusion], definition: Generative model that learns to reverse a noising process.}
+- {id: self_supervised, label: Self-supervised learning, type: method, aliases: [self-supervised learning, self-supervised, contrastive learning], definition: Pre-training from unlabeled data through pretext tasks.}
+- {id: mae, label: Masked autoencoder, type: method, aliases: [masked autoencoder, masked autoencoders, MAE], definition: Self-supervised pre-training that reconstructs masked image patches.}
+- {id: foundation_model, label: Foundation model, type: method, aliases: [foundation model, foundation models, geospatial foundation model, geospatial foundation models], definition: Large model pre-trained on broad data and adapted to many downstream tasks.}
+- {id: prithvi, label: Prithvi, type: method, broader: foundation_model, aliases: [Prithvi, Prithvi-EO, Prithvi-100M], definition: NASA–IBM geospatial foundation model pre-trained on Harmonized Landsat Sentinel-2 data.}
+- {id: satmae, label: SatMAE, type: method, broader: foundation_model, aliases: [SatMAE], definition: Masked autoencoder pre-training adapted to temporal and multispectral satellite imagery.}
+- {id: clip, label: CLIP, type: method, aliases: [CLIP, RemoteCLIP, vision-language model, vision-language models], definition: Contrastive image–text model; remote-sensing variants align imagery with captions.}
+- {id: llm, label: Large language model, type: method, aliases: [large language model, large language models, LLM, LLMs, GPT-4, ChatGPT], definition: Transformer language model trained on large text corpora; used for GIS agents and code generation.}
+- {id: rag, label: Retrieval-augmented generation, type: method, aliases: [retrieval-augmented generation, retrieval augmented generation, RAG], definition: Generation grounded in passages retrieved from an external corpus.}
+- {id: knowledge_graph, label: Knowledge graph, type: method, aliases: [knowledge graph, knowledge graphs], definition: Graph of entities and typed relations.}
+- {id: graph_neural_network, label: Graph neural network, type: method, aliases: [graph neural network, graph neural networks, GNN, GNNs, graph convolutional network], definition: Neural network operating on graph-structured data.}
+- {id: lstm, label: LSTM, type: method, aliases: [LSTM, long short-term memory, recurrent neural network, RNN], definition: Recurrent network for sequences such as satellite image time series.}
+- {id: pointnet, label: PointNet, type: method, broader: deep_learning, aliases: [PointNet, PointNet++], definition: Network that consumes raw point sets with permutation-invariant pooling.}
+- {id: kpconv, label: KPConv, type: method, broader: deep_learning, aliases: [KPConv, kernel point convolution], definition: Point convolution with deformable kernel points for point-cloud segmentation.}
+- {id: point_transformer, label: Point Transformer, type: method, aliases: [Point Transformer, point cloud transformer], definition: Self-attention network for 3D point clouds.}
+- {id: ransac, label: RANSAC, type: method, aliases: [RANSAC, random sample consensus], definition: Robust model fitting; standard for detecting roof planes in LiDAR.}
+- {id: region_growing, label: Region growing, type: method, aliases: [region growing, region-growing], definition: Segmentation that grows regions from seeds under a similarity criterion.}
+- {id: hough, label: Hough transform, type: method, aliases: [Hough transform, 3D Hough], definition: Voting-based detection of lines and planes.}
+- {id: icp, label: ICP, type: method, aliases: [ICP, iterative closest point], definition: Registration of two point clouds by iterative nearest-neighbour alignment.}
+- {id: slam, label: SLAM, type: method, aliases: [SLAM, simultaneous localization and mapping], definition: Building a map while localising the sensor within it.}
+- {id: ground_filtering, label: Ground filtering, type: method, aliases: [ground filtering, ground filter, cloth simulation filter, progressive morphological filter, ground points], definition: Separating terrain points from objects to derive a DTM.}
+- {id: photogrammetry, label: Photogrammetry, type: method, aliases: [photogrammetry, structure from motion, SfM, dense image matching, multi-view stereo], definition: 3D reconstruction from overlapping images.}
+- {id: nerf, label: Neural radiance field, type: method, aliases: [neural radiance field, neural radiance fields, NeRF, Gaussian splatting, 3D Gaussian splatting], definition: Neural scene representation for novel-view synthesis and 3D reconstruction.}
+- {id: building_reconstruction, label: Building reconstruction, type: method, aliases: [building reconstruction, roof reconstruction, 3D building reconstruction, building modelling, building modeling], definition: Deriving 3D building models (e.g. LoD2) from LiDAR or imagery.}
+- {id: change_detection, label: Change detection, type: method, aliases: [change detection], definition: Identifying differences between acquisitions of the same area at different times.}
+- {id: semantic_segmentation, label: Semantic segmentation, type: method, aliases: [semantic segmentation], definition: Assigning a class label to every pixel or point.}
+- {id: object_detection, label: Object detection, type: method, aliases: [object detection], definition: Locating and classifying objects with bounding boxes.}
+- {id: super_resolution, label: Super-resolution, type: method, aliases: [super-resolution, super resolution, pansharpening], definition: Increasing the spatial resolution of imagery.}
+- {id: data_fusion, label: Data fusion, type: method, aliases: [data fusion, multimodal fusion, sensor fusion], definition: Combining data from several sensors or modalities.}
+- {id: time_series_analysis, label: Time-series analysis, type: method, aliases: [time series analysis, time-series analysis, satellite image time series, BFAST, LandTrendr], definition: Analysing dense temporal stacks of observations.}
+- {id: otsu, label: Otsu thresholding, type: method, aliases: [Otsu, Otsu thresholding, Otsu's method], definition: Automatic histogram threshold that maximises between-class variance; common for water masks.}
+- {id: object_based, label: Object-based image analysis, type: method, aliases: [object-based image analysis, OBIA, GEOBIA], definition: Classification of segmented image objects rather than pixels.}
+- {id: kriging, label: Kriging, type: method, aliases: [kriging, geostatistics, geostatistical], definition: Geostatistical interpolation based on a variogram model.}
+- {id: idw, label: Inverse distance weighting, type: method, aliases: [inverse distance weighting, IDW], definition: Interpolation weighting samples by inverse distance.}
+- {id: spatial_autocorrelation, label: Spatial autocorrelation, type: method, aliases: [spatial autocorrelation, Moran's I, Getis-Ord, hot spot analysis], definition: Measures of whether nearby values are similar.}
+- {id: gwr, label: Geographically weighted regression, type: method, aliases: [geographically weighted regression, GWR], definition: Regression with spatially varying coefficients.}
+- {id: network_analysis, label: Network analysis, type: method, aliases: [network analysis, shortest path, routing, isochrone, isochrones], definition: Analysis on transport or utility networks.}
+- {id: map_matching, label: Map matching, type: method, aliases: [map matching, map-matching], definition: Snapping GPS trajectories to a road network.}
+- {id: geocoding, label: Geocoding, type: method, aliases: [geocoding, geoparsing, toponym resolution], definition: Turning place names or addresses into coordinates.}
+- {id: solar_modelling, label: Solar radiation modelling, type: method, aliases: [solar radiation modelling, solar irradiance, irradiation, shadow analysis, horizon], definition: Estimating incoming solar energy including terrain and building shading.}
+- {id: hydrodynamic_modelling, label: Hydrodynamic modelling, type: method, aliases: [hydrodynamic model, hydrodynamic modelling, flood simulation, hydraulic model], definition: Simulating water flow and inundation.}
+- {id: simulation, label: Simulation, type: method, aliases: [simulation, simulations, agent-based model, agent-based modelling], definition: Running models of physical or social processes inside a twin.}
+- {id: interferometry, label: InSAR, type: method, aliases: [InSAR, interferometry, interferometric SAR, PS-InSAR, persistent scatterer], definition: Measuring surface deformation from SAR phase differences.}
+- {id: spectral_unmixing, label: Spectral unmixing, type: method, aliases: [spectral unmixing, endmember, endmembers], definition: Decomposing mixed pixels into constituent material fractions.}
+- {id: atmospheric_correction, label: Atmospheric correction, type: method, aliases: [atmospheric correction, Sen2Cor, surface reflectance, bottom-of-atmosphere], definition: Removing atmospheric effects to obtain surface reflectance.}
+- {id: cloud_masking, label: Cloud masking, type: method, aliases: [cloud masking, cloud mask, cloud detection, Fmask, s2cloudless, scene classification layer], definition: Detecting clouds and shadows so they can be excluded.}
+- {id: domain_adaptation, label: Domain adaptation, type: method, aliases: [domain adaptation, transfer learning, fine-tuning], definition: Adapting a model to a new region, sensor or season.}
+- {id: few_shot, label: Few-shot learning, type: method, aliases: [few-shot learning, few-shot, zero-shot], definition: Learning new classes from very few labelled examples.}
+- {id: active_learning, label: Active learning, type: method, aliases: [active learning], definition: Selecting the most informative samples for labelling.}
+- {id: uncertainty, label: Uncertainty quantification, type: method, aliases: [uncertainty quantification, Monte Carlo, uncertainty estimation], definition: Estimating confidence intervals or error distributions of outputs.}
+
+- {id: deep_learning, label: Deep learning, type: method, aliases: [deep learning, deep neural network, deep neural networks], definition: Learning with multi-layer neural networks; the dominant approach in geospatial image and point-cloud analysis.}
+- {id: machine_learning, label: Machine learning, type: method, aliases: [machine learning, supervised learning, gradient boosting, XGBoost], definition: Statistical learning from data, from tree ensembles to neural networks.}
+
+# ---------------------------------------------------------------- sensors and platforms
+- {id: lidar, label: LiDAR, type: sensor, aliases: [LiDAR, LIDAR, lidar, laser scanning, laser scanner], definition: Light detection and ranging; active laser sensing that measures 3D structure as point clouds.}
+- {id: sentinel1, label: Sentinel-1, type: sensor, broader: remote_sensing_app, aliases: [Sentinel-1, Sentinel 1], definition: ESA C-band SAR constellation, 6–12-day revisit, works through cloud.}
+- {id: sentinel2, label: Sentinel-2, type: sensor, broader: remote_sensing_app, aliases: [Sentinel-2, Sentinel 2, MSI], definition: ESA multispectral constellation; 13 bands at 10–60 m, 5-day revisit.}
+- {id: sentinel3, label: Sentinel-3, type: sensor, aliases: [Sentinel-3, OLCI, SLSTR], definition: ESA ocean and land colour and temperature mission.}
+- {id: landsat, label: Landsat, type: sensor, broader: remote_sensing_app, aliases: [Landsat, Landsat 8, Landsat 9, Landsat-8, OLI, ETM+], definition: USGS/NASA 30 m multispectral archive since 1972.}
+- {id: modis, label: MODIS, type: sensor, aliases: [MODIS], definition: Moderate-resolution (250 m–1 km) daily imager on Terra and Aqua.}
+- {id: viirs, label: VIIRS, type: sensor, aliases: [VIIRS, night-time lights, nighttime lights], definition: Suomi-NPP / NOAA-20 imager, including night-time lights.}
+- {id: planetscope, label: PlanetScope, type: sensor, aliases: [PlanetScope, SkySat], definition: Commercial 3 m daily constellation of small satellites.}
+- {id: worldview, label: WorldView, type: sensor, aliases: [WorldView, WorldView-2, WorldView-3, QuickBird, Pleiades, Pléiades, very high resolution], definition: Commercial very-high-resolution (sub-metre) optical satellites.}
+- {id: gedi, label: GEDI, type: sensor, broader: lidar, aliases: [GEDI], definition: Spaceborne full-waveform LiDAR on the ISS measuring canopy height.}
+- {id: icesat2, label: ICESat-2, type: sensor, broader: lidar, aliases: [ICESat-2, ATLAS], definition: Photon-counting spaceborne laser altimeter.}
+- {id: airborne_lidar, label: Airborne LiDAR, type: sensor, broader: lidar, aliases: [airborne LiDAR, airborne laser scanning, ALS, aerial LiDAR], definition: Laser scanning from aircraft; dense 3D point clouds of terrain and buildings.}
+- {id: terrestrial_lidar, label: Terrestrial laser scanning, type: sensor, broader: lidar, aliases: [terrestrial laser scanning, terrestrial LiDAR, TLS], definition: Ground-based static laser scanning.}
+- {id: mobile_lidar, label: Mobile laser scanning, type: sensor, broader: lidar, aliases: [mobile laser scanning, mobile mapping, MLS], definition: Laser scanning from vehicles or backpacks.}
+- {id: uav, label: UAV, type: sensor, aliases: [UAV, UAVs, drone, drones, unmanned aerial vehicle, UAS], definition: Drone platform carrying cameras or LiDAR.}
+- {id: hyperspectral_sensor, label: Hyperspectral imager, type: sensor, aliases: [hyperspectral, PRISMA, EnMAP, AVIRIS, hyperspectral imaging], definition: Imager with hundreds of narrow contiguous bands.}
+- {id: sar, label: SAR, type: sensor, aliases: [SAR, synthetic aperture radar, TerraSAR-X, ALOS PALSAR], definition: Active microwave imaging radar.}
+- {id: thermal, label: Thermal infrared, type: sensor, aliases: [thermal infrared, TIRS, ECOSTRESS, land surface temperature], definition: Sensors measuring emitted heat.}
+- {id: gnss, label: GNSS, type: sensor, aliases: [GNSS, GPS], definition: Satellite positioning used for geolocation and trajectories.}
+- {id: street_view, label: Street-level imagery, type: sensor, aliases: [street view, street-level imagery, Google Street View, Mapillary], definition: Ground-level panoramic imagery.}
+- {id: iot, label: IoT sensors, type: sensor, aliases: [IoT, Internet of Things, sensor network, sensor networks], definition: Networked in-situ sensors that feed live data into twins.}
+
+# ---------------------------------------------------------------- datasets
+- {id: ahn, label: AHN, type: dataset, aliases: [AHN, AHN3, AHN4, AHN5, Actueel Hoogtebestand Nederland], definition: Dutch national airborne LiDAR elevation dataset.}
+- {id: 3dbag, label: 3DBAG, type: dataset, aliases: [3DBAG, 3D BAG], definition: Open LoD1.2–2.2 building models of the Netherlands reconstructed from AHN.}
+- {id: sen1floods11, label: Sen1Floods11, type: dataset, aliases: [Sen1Floods11], definition: Sentinel-1 flood segmentation benchmark with hand labels.}
+- {id: bigearthnet, label: BigEarthNet, type: dataset, aliases: [BigEarthNet], definition: Large multi-label Sentinel-1/2 patch benchmark.}
+- {id: eurosat, label: EuroSAT, type: dataset, aliases: [EuroSAT], definition: Sentinel-2 land-use scene classification dataset.}
+- {id: spacenet, label: SpaceNet, type: dataset, aliases: [SpaceNet], definition: Building and road extraction challenge datasets.}
+- {id: xbd, label: xBD, type: dataset, aliases: [xBD, xView2], definition: Building damage assessment dataset from pre/post-disaster imagery.}
+- {id: isprs_benchmark, label: ISPRS benchmarks, type: dataset, aliases: [ISPRS Vaihingen, ISPRS Potsdam, Vaihingen, Potsdam], definition: Aerial semantic labelling and 3D reconstruction benchmarks.}
+- {id: dales, label: DALES, type: dataset, aliases: [DALES], definition: Large aerial LiDAR semantic segmentation dataset.}
+- {id: semantic3d, label: Semantic3D, type: dataset, aliases: [Semantic3D, Toronto-3D, SensatUrban, Paris-Lille-3D], definition: Outdoor point-cloud segmentation benchmarks.}
+- {id: openstreetmap, label: OpenStreetMap, type: dataset, aliases: [OpenStreetMap, OSM], definition: Volunteered open world map.}
+- {id: worldcover, label: ESA WorldCover, type: dataset, aliases: [WorldCover, ESA WorldCover], definition: Global 10 m land-cover map from Sentinel-1 and -2.}
+- {id: dynamic_world, label: Dynamic World, type: dataset, aliases: [Dynamic World], definition: Near-real-time 10 m land-cover probabilities.}
+- {id: jrc_gsw, label: JRC Global Surface Water, type: dataset, aliases: [Global Surface Water, JRC Global Surface Water, GSW], definition: 30 m water occurrence and change maps from Landsat, 1984–2021.}
+- {id: corine, label: CORINE Land Cover, type: dataset, aliases: [CORINE, CORINE Land Cover], definition: European land-cover inventory.}
+- {id: copernicus_dem, label: Copernicus DEM, type: dataset, aliases: [Copernicus DEM, SRTM, ASTER GDEM, digital elevation model], definition: Global 30 m elevation models.}
+- {id: hls, label: HLS, type: dataset, aliases: [HLS, Harmonized Landsat Sentinel-2, Harmonized Landsat and Sentinel-2], definition: NASA harmonised Landsat 8/9 and Sentinel-2 surface reflectance at 30 m.}
+- {id: era5, label: ERA5, type: dataset, aliases: [ERA5], definition: ECMWF global climate reanalysis.}
+- {id: gbif, label: Global building footprints, type: dataset, aliases: [Microsoft building footprints, Google Open Buildings, Open Buildings, building footprints], definition: Large-scale building footprint datasets.}
+- {id: imagenet, label: ImageNet, type: dataset, aliases: [ImageNet], definition: Natural-image dataset often used for pre-training.}
+
+# ---------------------------------------------------------------- indices and products
+- {id: ndvi, label: NDVI, type: product, aliases: [NDVI, normalized difference vegetation index, normalised difference vegetation index], definition: (NIR − Red)/(NIR + Red); greenness and vegetation vigour.}
+- {id: ndwi, label: NDWI, type: product, aliases: [NDWI, normalized difference water index], definition: (Green − NIR)/(Green + NIR) after McFeeters; open-water index.}
+- {id: mndwi, label: MNDWI, type: product, aliases: [MNDWI, modified normalized difference water index, modified NDWI], definition: (Green − SWIR1)/(Green + SWIR1) after Xu; suppresses built-up noise and works better in turbid water.}
+- {id: evi, label: EVI, type: product, aliases: [EVI, enhanced vegetation index], definition: Vegetation index corrected for soil and atmosphere.}
+- {id: savi, label: SAVI, type: product, aliases: [SAVI, soil-adjusted vegetation index], definition: Vegetation index with a soil brightness factor.}
+- {id: nbr, label: NBR, type: product, aliases: [NBR, dNBR, normalized burn ratio], definition: (NIR − SWIR2)/(NIR + SWIR2); burn severity.}
+- {id: ndbi, label: NDBI, type: product, aliases: [NDBI, normalized difference built-up index], definition: (SWIR − NIR)/(SWIR + NIR); built-up areas.}
+- {id: awei, label: AWEI, type: product, aliases: [AWEI, automated water extraction index], definition: Water index designed to suppress shadows.}
+- {id: lai, label: LAI, type: product, aliases: [LAI, leaf area index], definition: One-sided leaf area per unit ground area.}
+- {id: dsm, label: DSM, type: product, aliases: [DSM, digital surface model, nDSM, normalized DSM], definition: Elevation of the top surface including buildings and trees.}
+- {id: dtm, label: DTM, type: product, aliases: [DTM, digital terrain model, bare-earth model], definition: Bare-ground elevation.}
+- {id: chm, label: Canopy height model, type: product, aliases: [canopy height model, CHM, canopy height, tree height], definition: Vegetation height, DSM minus DTM in forests.}
+- {id: lod2, label: LoD2 building model, type: product, aliases: [LoD2, LoD1, LoD3, level of detail], definition: CityGML level of detail; LoD2 adds roof shapes.}
+- {id: land_cover_map, label: Land-cover map, type: product, aliases: [land cover, land-cover, land use, land-use, LULC], definition: Classification of surface cover or use.}
+- {id: water_mask, label: Water mask, type: product, aliases: [water mask, water extent, surface water, water body, water bodies, open water], definition: Binary map of open water.}
+- {id: flood_map, label: Flood map, type: product, aliases: [flood map, flood mapping, flood extent, inundation map, inundation], definition: Extent of inundated areas.}
+- {id: point_cloud, label: Point cloud, type: product, aliases: [point cloud, point clouds], definition: Set of 3D points with attributes such as intensity and class.}
+- {id: mesh, label: 3D mesh, type: product, aliases: [3D mesh, mesh model, textured mesh], definition: Surface triangulation of a scene.}
+- {id: surface_reflectance, label: Surface reflectance, type: product, aliases: [L2A, Level-2A, analysis ready data, ARD], definition: Atmospherically corrected reflectance product.}
+- {id: lst, label: Land surface temperature, type: product, aliases: [LST, urban heat island, surface urban heat island], definition: Radiative skin temperature of the land surface.}
+- {id: aboveground_biomass, label: Above-ground biomass, type: product, aliases: [above-ground biomass, aboveground biomass, AGB, carbon stock], definition: Dry mass of vegetation above ground.}
+
+# ---------------------------------------------------------------- applications
+- {id: digital_twin, label: Digital twin, type: application, aliases: [digital twin, digital twins, digital twinning], definition: A virtual, continuously updated replica of a physical asset, building or city that couples data, models and simulation.}
+- {id: remote_sensing_app, label: Earth observation, type: application, aliases: [remote sensing, Earth observation, earth observation], definition: Observing the Earth's surface from satellites and aircraft.}
+- {id: wetland_mapping, label: Wetland mapping, type: application, aliases: [wetland, wetlands, wetland mapping, marsh, marshes, lagoon, lagoons, Ramsar], definition: Mapping extent, type and dynamics of wetlands.}
+- {id: lake_monitoring, label: Lake and reservoir monitoring, type: application, aliases: [lake, lakes, reservoir, reservoirs, water level, shoreline], definition: Monitoring inland water extent, level and quality.}
+- {id: water_quality, label: Water quality, type: application, aliases: [water quality, turbidity, chlorophyll-a, suspended sediment, salinity, brackish], definition: Optical and in-situ estimation of water constituents.}
+- {id: flood_monitoring, label: Flood monitoring, type: application, aliases: [flood, floods, flooding, flood detection, flood risk], definition: Detecting and forecasting floods.}
+- {id: drought, label: Drought monitoring, type: application, aliases: [drought, droughts, desertification], definition: Monitoring water deficit in vegetation and soils.}
+- {id: agriculture, label: Agriculture, type: application, aliases: [agriculture, crop, crops, crop mapping, crop classification, yield estimation, precision agriculture], definition: Mapping crops and estimating yields.}
+- {id: forest_monitoring, label: Forest monitoring, type: application, aliases: [forest, forests, deforestation, forest inventory, tree species], definition: Mapping forest cover, structure and change.}
+- {id: urban_mapping, label: Urban mapping, type: application, aliases: [urban, urban mapping, urbanization, urbanisation, urban expansion, impervious surface], definition: Mapping built-up areas and their growth.}
+- {id: building_extraction, label: Building extraction, type: application, aliases: [building extraction, building detection, building footprint extraction, building segmentation], definition: Delineating buildings from imagery or LiDAR.}
+- {id: road_extraction, label: Road extraction, type: application, aliases: [road extraction, road network extraction, road detection], definition: Delineating roads from imagery.}
+- {id: rooftop_solar, label: Rooftop solar potential, type: application, aliases: [rooftop solar, solar potential, photovoltaic, photovoltaics, PV, solar panels, solar energy], definition: Estimating PV yield of roofs from 3D models and irradiance.}
+- {id: building_energy, label: Building energy, type: application, aliases: [building energy, energy consumption, energy demand, energy efficiency, retrofit], definition: Modelling energy use of buildings and districts.}
+- {id: smart_city, label: Smart city, type: application, broader: digital_twin, aliases: [smart city, smart cities, urban digital twin, city digital twin], definition: Data-driven urban management, often through digital twins.}
+- {id: infrastructure, label: Infrastructure monitoring, type: application, aliases: [infrastructure, bridge, bridges, structural health monitoring, asset management], definition: Monitoring roads, bridges, utilities and assets.}
+- {id: disaster_response, label: Disaster response, type: application, aliases: [disaster, disasters, damage assessment, earthquake, emergency response], definition: Rapid mapping of damage after hazards.}
+- {id: wildfire, label: Wildfire, type: application, aliases: [wildfire, wildfires, fire, burned area, burnt area], definition: Mapping active fires and burned areas.}
+- {id: coastal, label: Coastal monitoring, type: application, aliases: [coastal, coastline, shoreline change, coastal erosion, sea level rise], definition: Monitoring coasts, erosion and sea-level impacts.}
+- {id: climate, label: Climate change, type: application, aliases: [climate change, climate adaptation, climate resilience], definition: Assessing climate impacts and adaptation.}
+- {id: biodiversity, label: Biodiversity and habitats, type: application, aliases: [biodiversity, habitat, habitats, species distribution, ecosystem, ecosystems], definition: Mapping habitats and ecosystem condition.}
+- {id: transportation, label: Transportation, type: application, aliases: [transportation, traffic, mobility, autonomous driving], definition: Traffic, mobility and autonomous vehicles.}
+- {id: cultural_heritage, label: Cultural heritage, type: application, aliases: [cultural heritage, heritage, archaeology, archaeological], definition: Documentation and protection of heritage sites.}
+- {id: geospatial_agent, label: GIS agents, type: application, aliases: [autonomous GIS, GIS copilot, geospatial agent, spatial analysis agent, GeoAI], definition: LLM agents that plan and execute spatial analyses.}
+- {id: mining, label: Mining and geology, type: application, aliases: [mining, mineral mapping, geological mapping, landslide, landslides], definition: Geological and mineral mapping, hazard mapping.}
+
+# ---------------------------------------------------------------- places
+- {id: ichkeul, label: Ichkeul, type: place, aliases: [Ichkeul, Lake Ichkeul, Ichkeul National Park], definition: Ramsar wetland and lake in northern Tunisia whose salinity and extent depend on rainfall and upstream dams.}
+- {id: bizerte, label: Bizerte, type: place, aliases: [Bizerte, Bizerta, Lake Bizerte], definition: Coastal city and lagoon in northern Tunisia, connected to Ichkeul.}
+- {id: tunisia, label: Tunisia, type: place, aliases: [Tunisia, Tunisian], definition: North African country.}
+- {id: netherlands, label: Netherlands, type: place, aliases: [Netherlands, Dutch], definition: Low-lying European country with national LiDAR (AHN).}
+- {id: delft, label: Delft, type: place, aliases: [Delft], definition: Dutch city; TU Delft is a centre of 3D city modelling research.}
+- {id: mediterranean, label: Mediterranean, type: place, aliases: [Mediterranean], definition: Region around the Mediterranean Sea.}
+- {id: europe, label: Europe, type: place, aliases: [Europe, European], definition: Continent.}
+- {id: africa, label: Africa, type: place, aliases: [Africa, African, sub-Saharan], definition: Continent.}
+- {id: china, label: China, type: place, aliases: [China, Chinese], definition: Country; a major source of remote-sensing research and benchmarks.}
+- {id: united_states, label: United States, type: place, aliases: [United States, USA, U.S.], definition: Country.}
+- {id: amazon, label: Amazon, type: place, aliases: [Amazon, Amazonia, Brazil], definition: South American rainforest region.}
+- {id: arctic, label: Arctic, type: place, aliases: [Arctic, Antarctic, Greenland, polar], definition: Polar regions.}
+- {id: india, label: India, type: place, aliases: [India, Indian], definition: Country.}
+
+# ---------------------------------------------------------------- standards, formats, software
+- {id: stac, label: STAC, type: standard, aliases: [STAC, SpatioTemporal Asset Catalog], definition: Specification for describing geospatial assets as searchable catalogues.}
+- {id: cog, label: Cloud-Optimized GeoTIFF, type: standard, aliases: [Cloud Optimized GeoTIFF, Cloud-Optimized GeoTIFF, COG, COGs], definition: GeoTIFF with internal tiling and overviews for HTTP range reads.}
+- {id: geotiff, label: GeoTIFF, type: standard, aliases: [GeoTIFF], definition: TIFF with embedded georeferencing.}
+- {id: las, label: LAS/LAZ, type: standard, aliases: [LAS, LAZ, COPC], definition: Binary formats for LiDAR point clouds; COPC is the cloud-optimised variant.}
+- {id: citygml, label: CityGML, type: standard, aliases: [CityGML], definition: OGC data model for 3D city models.}
+- {id: cityjson, label: CityJSON, type: standard, aliases: [CityJSON], definition: JSON encoding of the CityGML data model.}
+- {id: 3dtiles, label: 3D Tiles, type: standard, aliases: [3D Tiles, Cesium, CesiumJS], definition: OGC community standard for streaming massive 3D content.}
+- {id: ifc, label: IFC / BIM, type: standard, aliases: [IFC, BIM, building information modelling, building information modeling], definition: Building information models and their open exchange format.}
+- {id: gdal, label: GDAL, type: standard, aliases: [GDAL, OGR], definition: Translator library for raster and vector geospatial formats.}
+- {id: pdal, label: PDAL, type: standard, aliases: [PDAL], definition: Pipeline library for point-cloud processing.}
+- {id: rasterio_lib, label: rasterio, type: standard, aliases: [rasterio], definition: Pythonic access to GDAL rasters.}
+- {id: qgis, label: QGIS, type: standard, aliases: [QGIS, ArcGIS], definition: Desktop GIS software.}
+- {id: google_earth_engine, label: Google Earth Engine, type: standard, aliases: [Google Earth Engine, Earth Engine, GEE], definition: Cloud platform for planetary-scale geospatial analysis.}
+- {id: planetary_computer, label: Planetary Computer, type: standard, aliases: [Planetary Computer], definition: Microsoft's open STAC catalogue of Earth-observation data.}
+- {id: ogc, label: OGC standards, type: standard, aliases: [OGC, WMS, WFS, OGC API], definition: Open Geospatial Consortium web and data standards.}
+- {id: geojson, label: GeoJSON, type: standard, aliases: [GeoJSON, shapefile, GeoPackage, GeoParquet], definition: Vector data formats.}
+- {id: postgis, label: PostGIS, type: standard, aliases: [PostGIS, spatial database], definition: Spatial extension for PostgreSQL.}
+- {id: terratorch, label: TerraTorch, type: standard, aliases: [TerraTorch], definition: Toolkit for fine-tuning geospatial foundation models.}

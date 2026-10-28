@@ -1,0 +1,191 @@
+# Domain definitions used to select papers from the arXiv metadata snapshot (and, with an
+# API key, from OpenAlex). A paper qualifies for a domain when its title or abstract matches at
+# least one `require` pattern; it is ranked by how many `boost` patterns it matches. Patterns are
+# case-insensitive regular expressions with word boundaries added automatically.
+years: [2018, 2026]
+per_domain: 400
+
+domains:
+  gis:
+    label: GIS & spatial analysis
+    openalex_search: geographic information system spatial analysis
+    require:
+      - geographic information system
+      - GIS
+      - geospatial analysis
+      - spatial analysis
+      - spatial data infrastructure
+      - geocoding
+      - spatial interpolation
+      - kriging
+      - geostatistic\w*
+      - volunteered geographic information
+      - OpenStreetMap
+      - autonomous GIS
+      - GeoAI
+      - geospatial
+      - geographic\w*
+      - spatial data
+      - spatio-temporal data
+      - map matching
+      - GPS trajector\w*
+      - trajectory data
+      - points of interest
+      - urban computing
+      - location-based
+      - cartograph\w*
+      - geovisuali[sz]ation
+      - spatial econometric\w*
+      - geoparsing
+      - toponym\w*
+      - geolocation
+    boost:
+      - spatial autocorrelation
+      - Moran
+      - network analysis
+      - accessibility
+      - land use
+      - urban
+      - QGIS
+      - ArcGIS
+      - spatial join
+      - vector data
+      - shapefile
+      - GeoJSON
+      - raster
+      - spatial database
+      - PostGIS
+      - large language model
+      - map
+      - geography
+    exclude_categories: [hep-th, hep-ph, gr-qc, quant-ph, astro-ph.CO, astro-ph.GA, astro-ph.HE, eess.SP, cs.IT, math.IT]
+
+  remote_sensing:
+    label: Remote sensing
+    openalex_search: Sentinel-2 Landsat satellite remote sensing
+    require:
+      - Sentinel-1
+      - Sentinel-2
+      - Landsat
+      - MODIS
+      - multispectral
+      - hyperspectral
+      - SAR
+      - synthetic aperture radar
+      - satellite image\w*
+      - earth observation
+      - remote sensing
+    boost:
+      - NDVI
+      - NDWI
+      - MNDWI
+      - water
+      - wetland
+      - flood
+      - land cover
+      - change detection
+      - crop
+      - vegetation
+      - surface reflectance
+      - cloud mask\w*
+      - time series
+      - lake
+      - drought
+      - burn\w*
+      - coast\w*
+    exclude_categories: [hep-th, hep-ph, gr-qc, quant-ph]
+
+  lidar:
+    label: LiDAR & point clouds
+    openalex_search: airborne LiDAR point cloud
+    require:
+      - LiDAR
+      - point cloud\w*
+      - laser scanning
+      - ALS
+      - TLS
+      - GEDI
+      - ICESat-2
+    boost:
+      - airborne
+      - building
+      - roof
+      - digital surface model
+      - DSM
+      - DTM
+      - canopy height
+      - forest
+      - segmentation
+      - classification
+      - RANSAC
+      - PointNet
+      - reconstruction
+      - ground filtering
+      - urban
+      - terrain
+    exclude_categories: [hep-th, hep-ph, gr-qc, quant-ph, astro-ph.IM]
+
+  digital_twin:
+    label: Digital twins
+    openalex_search: urban digital twin 3D city model
+    require:
+      - digital twin\w*
+      - 3D city model\w*
+      - CityGML
+      - CityJSON
+      - city information model\w*
+      - BIM
+      - building information model\w*
+      - smart cit\w*
+      - urban simulation\w*
+      - 3D building model\w*
+      - LoD2
+      - building energy model\w*
+      - virtual city
+    boost:
+      - urban
+      - city
+      - smart cit\w*
+      - LoD2
+      - level of detail
+      - energy
+      - solar
+      - simulation
+      - infrastructure
+      - geospatial
+      - 3D Tiles
+      - flood
+      - IoT
+      - sensor
+    exclude_categories: [hep-th, hep-ph, gr-qc, astro-ph.CO]
+
+  geo_cv:
+    label: Geospatial computer vision
+    openalex_search: deep learning semantic segmentation satellite aerial imagery
+    require:
+      - aerial image\w*
+      - satellite image\w*
+      - remote sensing image\w*
+      - overhead imagery
+      - geospatial foundation model\w*
+      - Earth observation foundation model\w*
+      - Prithvi
+      - SatMAE
+    boost:
+      - semantic segmentation
+      - U-Net
+      - transformer
+      - convolutional
+      - deep learning
+      - foundation model
+      - self-supervised
+      - object detection
+      - building footprint
+      - road extraction
+      - land cover
+      - change detection
+      - few-shot
+      - benchmark
+      - dataset
+    require_categories: [cs.CV, eess.IV, cs.LG, cs.AI]
+    exclude_categories: [hep-th, hep-ph, gr-qc, quant-ph]
