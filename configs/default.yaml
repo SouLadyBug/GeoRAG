@@ -1,0 +1,19 @@
+# Defaults; `georag hardware` writes configs/hardware.yaml on top of this file.
+llm:
+  base_url: http://127.0.0.1:11434/v1   # Ollama; llama.cpp server: http://127.0.0.1:8080/v1
+  temperature: 0.2
+  max_tokens: 700
+retrieval:
+  chunk_tokens: 500
+  chunk_overlap: 0.15
+  rrf_k: 60
+  candidates: 50
+  rerank_top_k: 30
+  final_k: 8
+  graph_hops: 2
+  refusal_threshold: 0.15
+  support_threshold: 0.25
+sandbox:
+  timeout_s: 300
+  memory_mb: 4096
+  max_repairs: 3

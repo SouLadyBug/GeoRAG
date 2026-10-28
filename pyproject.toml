@@ -1,0 +1,72 @@
+[project]
+name = "georag"
+version = "0.1.0"
+description = "A local graph-and-vector retrieval-augmented agent that turns geospatial literature into executable Earth-observation workflows"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Emna Saada" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.1",
+    "pandas>=2.2",
+    "pyarrow>=18",
+    "pydantic>=2.9",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "requests>=2.32",
+    "bm25s>=0.2.6",
+    "PyStemmer>=2.2",
+    "networkx>=3.3",
+    "jinja2>=3.1",
+    "rasterio>=1.4",
+    "pyproj>=3.7",
+    "shapely>=2.0",
+    "matplotlib>=3.9",
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "sse-starlette>=2.1",
+    "typer>=0.12",
+    "rich>=13.9",
+]
+
+[project.optional-dependencies]
+models = ["torch>=2.5", "sentence-transformers>=3.3", "transformers>=4.51"]
+pdf = ["pymupdf4llm>=0.0.17"]
+openalex = ["pyalex>=0.15"]
+stac = ["pystac-client>=0.8", "planetary-computer>=1.0", "odc-stac>=0.3"]
+llamacpp = ["llama-cpp-python[server]>=0.3.4"]
+
+[project.scripts]
+georag = "georag.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "ruff>=0.8", "mypy>=1.13", "pre-commit>=4.0", "types-PyYAML", "types-requests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/georag"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "SIM905"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true
+check_untyped_defs = true
+files = ["src/georag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: needs internet access", "models: needs downloaded models"]
+addopts = "-m 'not network and not models'"
+asyncio_default_fixture_loop_scope = "function"

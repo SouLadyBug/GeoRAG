@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use GeoRAG Copilot or GeoRAG-Bench, please cite it as below."
+title: "GeoRAG Copilot: A Local Graph-and-Vector Retrieval-Augmented Agent that Turns Geospatial Literature into Executable Earth-Observation Workflows"
+type: software
+authors:
+  - family-names: Saada
+    given-names: Emna
+repository-code: "https://github.com/emna-saada/GeoRAG"
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-10-28
+keywords:
+  - retrieval-augmented generation
+  - knowledge graph
+  - remote sensing
+  - GIS
+  - LiDAR
+  - digital twin
+  - Sentinel-2
