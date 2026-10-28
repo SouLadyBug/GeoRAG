@@ -1,5 +1,5 @@
 # data and models are rebuilt with `make index`; never committed
-data/
+/data/
 *.gguf
 .env
 .venv/
