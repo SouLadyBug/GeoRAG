@@ -1,0 +1,66 @@
+[
+  {
+    "id": "analyze-ichkeul",
+    "mode": "analyze",
+    "question": "Map MNDWI water extent at Ichkeul for February 2020 vs February 2025.",
+    "title": "Water extent at Ichkeul, Feb 2020 vs Feb 2025",
+    "blurb": "Sentinel-2 composites, SCL cloud mask, change map and areas.",
+    "seconds": 124.8
+  },
+  {
+    "id": "ask-water-indices",
+    "mode": "ask",
+    "question": "How does MNDWI differ from NDWI for mapping open water, and when is each preferred?",
+    "title": "MNDWI vs NDWI for open water",
+    "blurb": "Cited answer with a sentence-level support check.",
+    "seconds": 72.1
+  },
+  {
+    "id": "analyze-bizerte-ndvi",
+    "mode": "analyze",
+    "question": "Compute NDVI around Bizerte for July 2024.",
+    "title": "Summer NDVI around Bizerte",
+    "blurb": "Vegetation index map and class statistics.",
+    "seconds": 87.4
+  },
+  {
+    "id": "design-rooftop-solar",
+    "mode": "design",
+    "question": "Design a study on rooftop solar potential from airborne LiDAR in a Mediterranean city.",
+    "title": "Study design: rooftop solar from airborne LiDAR",
+    "blurb": "Six-section brief with dataset links and references.",
+    "seconds": 478.5
+  },
+  {
+    "id": "explore-foundation-wetlands",
+    "mode": "explore",
+    "question": "How are foundation models and wetlands connected in the corpus?",
+    "title": "Foundation models \u2194 wetlands",
+    "blurb": "Concept paths and the passages behind each link.",
+    "seconds": 72.3
+  },
+  {
+    "id": "explore-lidar-twins",
+    "mode": "explore",
+    "question": "How are LiDAR and digital twins connected in the corpus?",
+    "title": "LiDAR \u2194 digital twins",
+    "blurb": "Knowledge-graph subgraph between two fields.",
+    "seconds": 72.8
+  },
+  {
+    "id": "ask-lidar-roofs",
+    "mode": "ask",
+    "question": "How are roof planes extracted from airborne LiDAR point clouds for LoD2 building models?",
+    "title": "Roof planes from airborne LiDAR",
+    "blurb": "Methods across reconstruction papers, cited.",
+    "seconds": 104.7
+  },
+  {
+    "id": "ask-refusal",
+    "mode": "ask",
+    "question": "How many tourists visited Lake Ichkeul in the summer of 2023?",
+    "title": "Out of scope: the assistant declines",
+    "blurb": "Refuses rather than guesses when the corpus has no answer.",
+    "seconds": 11.2
+  }
+]
