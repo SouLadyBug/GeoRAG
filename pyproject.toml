@@ -70,3 +70,8 @@ testpaths = ["tests"]
 markers = ["network: needs internet access", "models: needs downloaded models"]
 addopts = "-m 'not network and not models'"
 asyncio_default_fixture_loop_scope = "function"
+
+[[tool.mypy.overrides]]
+# These ignores are needed when torch/transformers are installed and unused when they are not (CI).
+module = ["georag.index.dense", "georag.index.rerank"]
+warn_unused_ignores = false
