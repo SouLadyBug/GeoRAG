@@ -36,12 +36,13 @@ export function RetrievalChart({ site, metric }: { site: SiteData; metric: "reca
 
 function AnalyzeScatter({ items }: { items: any[] }) {
   const ok = items.filter((r) => r.ok && r.reference_km2 != null);
-  const max = Math.max(10, ...ok.map((r) => Math.max(r.water_km2, r.reference_km2))) * 1.08;
+  const max = 10 ** Math.ceil(Math.log10(Math.max(10, ...ok.map((r) => Math.max(r.water_km2, r.reference_km2)))));
+  const tick = { ...AXIS.axisLabel, formatter: (v: number) => (v < 1 ? String(v) : v.toLocaleString()) };
   const option = {
     grid: { left: 60, right: 24, top: 20, bottom: 50 },
     tooltip: { ...TOOLTIP, formatter: (p: any) => `${p.data[2]} · ${p.data[3]}<br/>GeoRAG ${p.data[1].toFixed(1)} km² · JRC ${p.data[0].toFixed(1)} km²` },
-    xAxis: { type: "log", name: "JRC GSW reference (km²)", nameLocation: "middle", nameGap: 30, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS },
-    yAxis: { type: "log", name: "GeoRAG Analyze (km²)", nameLocation: "middle", nameGap: 44, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS },
+    xAxis: { type: "log", name: "JRC GSW reference (km²)", nameLocation: "middle", nameGap: 30, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS, axisLabel: tick },
+    yAxis: { type: "log", name: "GeoRAG Analyze (km²)", nameLocation: "middle", nameGap: 44, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS, axisLabel: tick },
     series: [
       { type: "line", data: [[0.5, 0.5], [max, max]], showSymbol: false, lineStyle: { color: "#475569", type: "dashed" }, silent: true },
       { type: "scatter", symbolSize: 11, data: ok.map((r) => [r.reference_km2, r.water_km2, r.lake, r.month]), itemStyle: { color: "#2dd4bf", borderColor: "#060a13", borderWidth: 1 } },

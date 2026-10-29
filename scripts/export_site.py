@@ -27,6 +27,12 @@ def main() -> None:
         if (res / "answers_small_summary.json").exists()
         else None
     )
+    # Server aliases → the model actually served (CPU tier serves GGUF builds through llama.cpp).
+    served = {
+        "qwen3-4b": "Qwen3-4B-Instruct-2507 (Q4_K_M, llama.cpp)",
+        "qwen3-1.7b": "Qwen3-1.7B (Q4_K_M, llama.cpp)",
+    }
+    gen, small = served.get(gen, gen), served.get(small, small) if small else None
     models = {
         "generator": gen,
         "generator_small": small,
@@ -36,8 +42,6 @@ def main() -> None:
         "hardware": hardware_string(),
     }
 
-    figs = res / "figures"
-    figs.mkdir(exist_ok=True)
     if (res / "retrieval_ablation.json").exists():
         para = res / "retrieval_ablation_paraphrased.json"
         ablation_chart(

@@ -94,11 +94,18 @@ def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) 
         ax.set_xticks(list(x), [SHORT.get(n, n) for n in names], fontsize=8.5)
         ax.set_ylim(0, 1.05)
         ax.set_title(title, color=DARK["fg"])
-    axes[0].legend(
-        facecolor=DARK["bg"], edgecolor=DARK["grid"], labelcolor=DARK["fg"], fontsize=9, loc="upper left"
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(
+        handles,
+        labels,
+        loc="lower center",
+        ncol=len(labels),
+        frameon=False,
+        labelcolor=DARK["fg"],
+        fontsize=10,
     )
     fig.suptitle("GeoRAG-Bench retrieval ablation", color=DARK["fg"], fontsize=14)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.07, 1, 1))
     fig.savefig(out, dpi=140, facecolor=DARK["bg"])
     plt.close(fig)
     return out
@@ -261,6 +268,9 @@ def write_report(results: Path, models: dict) -> Path:
         "3. **Automatic judges.** Faithfulness and citation precision are judged by a 0.6B cross-encoder, which measures whether a passage plausibly supports a sentence, not whether the sentence is true.",
         "4. **Reference data.** JRC GSW occurrence summarises 1984–2021; a single month in 2020 or 2024 legitimately differs, especially for seasonal or regulated lakes.",
         "5. **Scope of Analyze.** Tasks are single-step template analyses. Complex multi-step GIS workflows, where GIS Copilot and GeoAnalystBench report the largest failure rates, are not evaluated and no parity is claimed.",
+        "6. **Sample sizes.** On the CPU tier each end-to-end answer takes about a minute, so the answer evaluation uses a stratified "
+        "100 of the 200 factual questions (20 per domain), and cross-domain generation was stopped at 27 accepted questions (about one "
+        "generation in five passes the automatic filter). Bootstrap intervals in `results/retrieval_ablation.json` show the resulting uncertainty.",
         "",
     ]
     out = results / "REPORT.md"
