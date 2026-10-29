@@ -3,19 +3,21 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { AnalyzeResult, LayerSet } from "../types";
 
+// OpenStreetMap's standard tiles need no API key; muted so the analysis layers stand out.
 const STYLE: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
-    carto: {
+    osm: {
       type: "raster",
-      tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"],
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
       tileSize: 256,
-      attribution: "© OpenStreetMap contributors © CARTO",
+      maxzoom: 19,
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   },
   layers: [
     { id: "bg", type: "background", paint: { "background-color": "#e9e6df" } },
-    { id: "carto", type: "raster", source: "carto", paint: { "raster-opacity": 1 } },
+    { id: "osm", type: "raster", source: "osm", paint: { "raster-saturation": -0.55, "raster-contrast": -0.05 } },
   ],
 };
 
@@ -80,7 +82,15 @@ export default function MapPanel({ result, assetBase }: { result: AnalyzeResult 
   // Add every layer once per result; visibility is switched afterwards.
   useEffect(() => {
     const m = map.current;
-    if (!m || !ready || !result) return;
+    if (!m || !ready) return;
+    // Drop the previous run's layers first, including when the newest turn has no map at all.
+    for (const layer of m.getStyle().layers ?? []) {
+      if (layer.id.startsWith("lyr-")) m.removeLayer(layer.id);
+    }
+    for (const sid of Object.keys(m.getStyle().sources ?? {})) {
+      if (sid.startsWith("src-")) m.removeSource(sid);
+    }
+    if (!result) return;
     const all = [...base, ...overlays];
     for (const l of all) {
       const sid = `src-${l.id}`;
