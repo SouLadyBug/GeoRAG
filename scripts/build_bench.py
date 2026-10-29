@@ -15,7 +15,7 @@ from georag.eval.bench import build_cross, build_qa, load_bench
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-domain", type=int, default=40)
-    ap.add_argument("--cross", type=int, default=50)
+    ap.add_argument("--cross", type=int, default=27)
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     s = get_settings()
