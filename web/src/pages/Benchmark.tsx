@@ -16,7 +16,9 @@ export function RetrievalChart({ site, metric }: { site: SiteData; metric: "reca
   const names = Object.keys(configs);
   const fact = names.map((n) => configs[n].summary.factual?.[metric] ?? null);
   const cross = names.map((n) => configs[n].summary.cross?.[metric] ?? null);
-  const ci = names.map((n) => configs[n].summary.factual?.["recall@5_ci95"]);
+  const paraConfigs = site.benchmark.retrieval_paraphrased?.configs;
+  const para = paraConfigs ? names.map((n) => paraConfigs[n]?.summary.paraphrased?.[metric] ?? null) : null;
+  const label = { show: true, position: "top", color: "#cbd5e1", fontSize: 10, formatter: (p: any) => (p.value == null ? "" : `${Math.round(p.value * 100)}`) };
   const option = {
     grid: { left: 50, right: 20, top: 40, bottom: 40 },
     tooltip: { ...TOOLTIP, trigger: "axis", valueFormatter: (v: number) => (v == null ? "—" : v.toFixed(3)) },
@@ -24,26 +26,11 @@ export function RetrievalChart({ site, metric }: { site: SiteData; metric: "reca
     xAxis: { type: "category", data: names.map((n) => SHORT[n] ?? n), ...AXIS },
     yAxis: { type: "value", min: 0, max: 1, ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: (v: number) => `${Math.round(v * 100)}%` } },
     series: [
-      {
-        name: `Factual · ${metric}`,
-        type: "bar",
-        data: fact,
-        barMaxWidth: 34,
-        itemStyle: { color: "#2dd4bf", borderRadius: [5, 5, 0, 0] },
-        label: { show: true, position: "top", color: "#cbd5e1", fontSize: 11, formatter: (p: any) => (p.value == null ? "" : `${Math.round(p.value * 100)}`) },
-        markLine: undefined,
-      },
-      {
-        name: `Cross-domain · ${metric === "recall@5" ? "recall@5 (both gold)" : metric}`,
-        type: "bar",
-        data: cross,
-        barMaxWidth: 34,
-        itemStyle: { color: "#38bdf8", borderRadius: [5, 5, 0, 0] },
-        label: { show: true, position: "top", color: "#cbd5e1", fontSize: 11, formatter: (p: any) => (p.value == null ? "" : `${Math.round(p.value * 100)}`) },
-      },
+      { name: "Factual · generated wording", type: "bar", data: fact, barMaxWidth: 26, itemStyle: { color: "#2dd4bf", borderRadius: [4, 4, 0, 0] }, label },
+      ...(para ? [{ name: "Factual · paraphrased", type: "bar", data: para, barMaxWidth: 26, itemStyle: { color: "#a78bfa", borderRadius: [4, 4, 0, 0] }, label }] : []),
+      { name: metric === "recall@5" ? "Cross-domain · both passages" : "Cross-domain", type: "bar", data: cross, barMaxWidth: 26, itemStyle: { color: "#38bdf8", borderRadius: [4, 4, 0, 0] }, label },
     ],
   };
-  void ci;
   return <Chart option={option} />;
 }
 
@@ -124,7 +111,7 @@ export default function Benchmark({ site }: { site: SiteData | null }) {
           <div className="container">
             <h3 style={{ fontSize: 22, marginBottom: 6 }}>Retrieval ablation</h3>
             <p className="muted" style={{ marginTop: 0 }}>
-              Gold passage = the chunk a question was generated from (two chunks for cross-domain questions). k = 10 after fusion; the reranker scores the top 20 fused candidates (CPU tier).
+              Gold passage = the chunk a question was generated from (two chunks for cross-domain questions). Generated questions reuse their passage's wording, which flatters BM25; the paraphrased set rewords the same questions to limit that overlap. k = 10 after fusion; the reranker scores the top 20 fused candidates (CPU tier).
             </p>
             <div className="grid-2">
               <div className="card" style={{ padding: "16px 10px 6px" }}>
@@ -146,6 +133,8 @@ export default function Benchmark({ site }: { site: SiteData | null }) {
                         Factual {m}
                       </th>
                     ))}
+                    {site.benchmark.retrieval_paraphrased && <th className="num">Paraphrased R@5</th>}
+                    {site.benchmark.retrieval_paraphrased && <th className="num">Paraphrased nDCG@10</th>}
                     <th className="num">Cross both@8</th>
                     <th className="num">Cross nDCG@10</th>
                   </tr>
@@ -159,13 +148,15 @@ export default function Benchmark({ site }: { site: SiteData | null }) {
                           {c.summary.factual[m].toFixed(3)}
                         </td>
                       ))}
+                      {site.benchmark.retrieval_paraphrased && <td className="num">{site.benchmark.retrieval_paraphrased.configs[name]?.summary.paraphrased?.["recall@5"].toFixed(3) ?? "—"}</td>}
+                      {site.benchmark.retrieval_paraphrased && <td className="num">{site.benchmark.retrieval_paraphrased.configs[name]?.summary.paraphrased?.["ndcg@10"].toFixed(3) ?? "—"}</td>}
                       <td className={`num${c.summary.cross?.["all@8"] === best("cross", "all@8") ? " best" : ""}`}>{c.summary.cross?.["all@8"].toFixed(3) ?? "—"}</td>
                       <td className={`num${c.summary.cross?.["ndcg@10"] === best("cross", "ndcg@10") ? " best" : ""}`}>{c.summary.cross?.["ndcg@10"].toFixed(3) ?? "—"}</td>
                     </tr>
                   ))}
                   <tr>
                     <td className="faint">+ figure index</td>
-                    <td className="num faint" colSpan={6} style={{ textAlign: "left" }}>
+                    <td className="num faint" colSpan={8} style={{ textAlign: "left" }}>
                       not evaluated — the abstract corpus has no figures (the stage is implemented for the PDF corpus)
                     </td>
                   </tr>

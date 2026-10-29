@@ -193,3 +193,49 @@ def load_bench(bench_dir: Path) -> dict[str, list[dict]]:
         if (bench_dir / "analyze.yaml").exists()
         else [],
     }
+
+
+class _Para(BaseModel):
+    question: str
+
+
+def build_paraphrased(items: list[dict], llm: LLM, out: Path, max_overlap: float = 0.6) -> list[dict]:
+    """Reworded copies of the factual questions, keeping the same gold passages.
+
+    Questions generated from a passage reuse its wording, which flatters lexical retrieval. The
+    paraphrased set keeps the information need but limits word overlap with the original question.
+    """
+    rows = _read_jsonl(out)
+    done = {r["source_id"] for r in rows}
+    for it in items:
+        if it["id"] in done:
+            continue
+        try:
+            p = llm.json(
+                [
+                    {"role": "system", "content": prompts.PARAPHRASE_SYSTEM},
+                    {"role": "user", "content": it["question"]},
+                ],
+                _Para,
+                max_tokens=120,
+            )
+        except Exception as exc:
+            log.warning("paraphrase failed for %s: %s", it["id"], exc)
+            continue
+        q = p.question.strip()
+        a, b = set(content_tokens(it["question"])), set(content_tokens(q))
+        overlap = len(a & b) / max(1, len(b))
+        if not q.endswith("?") or overlap > max_overlap or len(q.split()) < 5:
+            continue
+        row = {
+            **it,
+            "id": f"para-{it['id']}",
+            "source_id": it["id"],
+            "type": "paraphrased",
+            "question": q,
+            "overlap": round(overlap, 3),
+        }
+        _append(out, row)
+        rows.append(row)
+        log.info("para %d  %s", len(rows), q)
+    return rows

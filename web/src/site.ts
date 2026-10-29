@@ -22,6 +22,7 @@ export interface SiteData {
   hero_caption?: string;
   benchmark: {
     retrieval?: { n: number; configs: Record<string, { summary: { factual: MetricRow; cross?: MetricRow }; seconds: number }> };
+    retrieval_paraphrased?: { n: number; configs: Record<string, { summary: { paraphrased?: MetricRow }; seconds: number }> } | null;
     answers?: Record<string, any>;
     answers_small?: Record<string, any> | null;
     analyze?: Record<string, any> & { items: any[] };

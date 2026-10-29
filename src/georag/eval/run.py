@@ -92,7 +92,7 @@ def retrieval_ablation(engine, items: list[dict], k: int = 10) -> dict:
                 }
             )
         summary: dict[str, dict] = {}
-        for subset in ("factual", "cross"):
+        for subset in ("factual", "cross", "paraphrased"):
             rows = [r for r in per_item if r["type"] == subset]
             if not rows:
                 continue

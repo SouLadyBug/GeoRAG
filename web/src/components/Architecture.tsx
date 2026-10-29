@@ -16,7 +16,7 @@ export default function Architecture() {
   const arrow = (x1: number, y1: number, x2: number, y2: number) => <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#3b4a66" strokeWidth={1.6} markerEnd="url(#arr)" />;
   return (
     <div className="arch card" style={{ padding: 18 }}>
-      <svg viewBox="0 0 1140 560" role="img" aria-label="GeoRAG architecture">
+      <svg viewBox="0 0 1140 530" role="img" aria-label="GeoRAG architecture">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#3b4a66" />

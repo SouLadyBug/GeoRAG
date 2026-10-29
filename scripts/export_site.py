@@ -39,7 +39,12 @@ def main() -> None:
     figs = res / "figures"
     figs.mkdir(exist_ok=True)
     if (res / "retrieval_ablation.json").exists():
-        ablation_chart(json.loads((res / "retrieval_ablation.json").read_text()), res / "ablation.png")
+        para = res / "retrieval_ablation_paraphrased.json"
+        ablation_chart(
+            json.loads((res / "retrieval_ablation.json").read_text()),
+            res / "ablation.png",
+            json.loads(para.read_text()) if para.exists() else None,
+        )
     if (res / "analyze_summary.json").exists():
         analyze_chart(json.loads((res / "analyze_summary.json").read_text()), res / "analyze_vs_jrc.png")
     write_report(res, models)

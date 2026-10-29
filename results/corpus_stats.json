@@ -1,0 +1,32 @@
+{
+  "documents": 2239,
+  "by_source": {
+    "arxiv": 2000,
+    "glossary": 181,
+    "docs": 37,
+    "catalogue": 21
+  },
+  "by_domain": {
+    "gis": 400,
+    "remote_sensing": 400,
+    "lidar": 400,
+    "digital_twin": 400,
+    "geo_cv": 400,
+    "glossary": 181,
+    "docs": 37,
+    "catalogue": 21
+  },
+  "papers_by_year": {
+    "2018": 62,
+    "2019": 83,
+    "2020": 173,
+    "2021": 185,
+    "2022": 162,
+    "2023": 265,
+    "2024": 294,
+    "2025": 446,
+    "2026": 330
+  },
+  "open_licence_papers": 1102,
+  "catalogue_source": "aws-open-data-registry"
+}

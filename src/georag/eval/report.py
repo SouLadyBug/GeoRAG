@@ -43,7 +43,7 @@ def _style(ax):
     ax.set_axisbelow(True)
 
 
-def ablation_chart(retrieval: dict, out: Path) -> Path:
+def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) -> Path:
     names = list(retrieval["configs"])
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6), facecolor=DARK["bg"])
     for ax, (metric, title) in zip(
@@ -51,12 +51,37 @@ def ablation_chart(retrieval: dict, out: Path) -> Path:
     ):
         _style(ax)
         x = range(len(names))
-        fact = [retrieval["configs"][n]["summary"]["factual"][metric] for n in names]
-        cross = [retrieval["configs"][n]["summary"].get("cross", {}).get(metric, 0) for n in names]
-        w = 0.38
-        b1 = ax.bar([i - w / 2 for i in x], fact, w, color=DARK["a"], label="factual")
-        b2 = ax.bar([i + w / 2 for i in x], cross, w, color=DARK["b"], label="cross-domain")
-        for bars in (b1, b2):
+        series = [
+            (
+                "factual (generated wording)",
+                [retrieval["configs"][n]["summary"]["factual"][metric] for n in names],
+                DARK["a"],
+            )
+        ]
+        if paraphrased:
+            series.append(
+                (
+                    "factual (paraphrased)",
+                    [
+                        paraphrased["configs"][n]["summary"].get("paraphrased", {}).get(metric, 0)
+                        for n in names
+                    ],
+                    "#a78bfa",
+                )
+            )
+        series.append(
+            (
+                "cross-domain",
+                [retrieval["configs"][n]["summary"].get("cross", {}).get(metric, 0) for n in names],
+                DARK["b"],
+            )
+        )
+        w = 0.8 / len(series)
+        groups = []
+        for j, (label, vals, color) in enumerate(series):
+            offs = (j - (len(series) - 1) / 2) * w
+            groups.append(ax.bar([i + offs for i in x], vals, w, color=color, label=label))
+        for bars in groups:
             for b in bars:
                 ax.text(
                     b.get_x() + b.get_width() / 2,
@@ -162,6 +187,21 @@ def write_report(results: Path, models: dict) -> Path:
                 "",
                 f"95 % bootstrap interval for the full system's factual Recall@5: {lo:.3f}–{hi:.3f}.",
             ]
+        para = _load(results / "retrieval_ablation_paraphrased.json")
+        if para:
+            lines += [
+                "",
+                f"**Paraphrased questions.** The {para['n']} factual questions were reworded by the generator to limit word overlap "
+                "with the original question (and hence with the gold passage), keeping the same gold passages:",
+                "",
+                "| Configuration | R@5 | R@10 | MRR@10 | nDCG@10 |",
+                "|---|---:|---:|---:|---:|",
+            ]
+            for name, c in para["configs"].items():
+                f = c["summary"].get("paraphrased", {})
+                lines.append(
+                    f"| {name} | {_fmt(f.get('recall@5'))} | {_fmt(f.get('recall@10'))} | {_fmt(f.get('mrr@10'))} | {_fmt(f.get('ndcg@10'))} |"
+                )
         lines += [
             "",
             "The figure-index stage (`+ figures`) is implemented for the PDF path but not evaluated: the abstract corpus contains no figures.",
@@ -228,6 +268,13 @@ def write_report(results: Path, models: dict) -> Path:
     return out
 
 
+def _strip_items(data: dict | None) -> dict | None:
+    if data:
+        for c in data["configs"].values():
+            c.pop("items", None)
+    return data
+
+
 def build_site_json(
     results: Path,
     site_dir: Path,
@@ -264,6 +311,7 @@ def build_site_json(
         "graph_overview": graph_overview,
         "benchmark": {
             "retrieval": retrieval,
+            "retrieval_paraphrased": _strip_items(_load(results / "retrieval_ablation_paraphrased.json")),
             "answers": _load(results / "answers_summary.json"),
             "answers_small": _load(results / "answers_small_summary.json"),
             "analyze": _load(results / "analyze_summary.json"),

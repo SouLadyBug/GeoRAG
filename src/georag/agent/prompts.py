@@ -112,3 +112,8 @@ Write ONE question whose full answer needs facts from both passage A and passage
 The question must be self-contained (no "passage A", "this paper") and name the concrete concepts.
 Reply as JSON: {"question": "...", "answer": "...", "answerable": true}
 If the passages cannot be meaningfully combined, reply {"question": "", "answer": "", "answerable": false}."""
+
+PARAPHRASE_SYSTEM = """Rewrite a question the way a researcher would naturally type it into a search box,
+without seeing the source text. Keep the meaning and the one or two essential technical terms,
+but change the wording: use synonyms, reorder the clauses, drop copied phrases and paper-specific names
+where a description works. Reply as JSON: {"question": "..."}"""

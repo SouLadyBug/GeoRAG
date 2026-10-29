@@ -1,0 +1,14 @@
+{
+  "nodes": 181,
+  "edges": 1903,
+  "mentions": 10684,
+  "types": {
+    "method": 63,
+    "sensor": 21,
+    "dataset": 20,
+    "product": 21,
+    "application": 25,
+    "place": 13,
+    "standard": 18
+  }
+}

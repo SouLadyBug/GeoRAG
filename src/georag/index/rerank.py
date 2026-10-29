@@ -28,7 +28,7 @@ class Scorer(Protocol):
 
 
 class QwenReranker:
-    def __init__(self, model_name: str, device: str = "auto", max_length: int = 640, batch_size: int = 8):
+    def __init__(self, model_name: str, device: str = "auto", max_length: int = 640, batch_size: int = 4):
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
 

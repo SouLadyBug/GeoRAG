@@ -1,0 +1,5 @@
+{"stage": "corpus", "fingerprint": "c2148d1a8e82b754", "seconds": 356.9, "documents": 2239, "papers": 2000, "docs": 37, "catalogue": 21, "finished": "2026-10-28 22:32:35"}
+{"stage": "chunk", "fingerprint": "6d22d407d46acd6e", "seconds": 0.4, "chunks": 2689, "finished": "2026-10-28 22:39:38"}
+{"stage": "bm25", "fingerprint": "6d22d407d46acd6e", "seconds": 0.6, "chunks": 2689, "finished": "2026-10-28 22:39:38"}
+{"stage": "dense", "fingerprint": "21d5682d6bbde0f4", "seconds": 1005.8, "chunks": 2689, "dim": 1024, "model": "Qwen/Qwen3-Embedding-0.6B", "finished": "2026-10-28 23:04:41"}
+{"stage": "graph", "fingerprint": "600925ea46462990", "seconds": 4.5, "nodes": 181, "edges": 1903, "mentions": 10684, "types": {"method": 63, "sensor": 21, "dataset": 20, "product": 21, "application": 25, "place": 13, "standard": 18}, "finished": "2026-10-28 23:04:46"}

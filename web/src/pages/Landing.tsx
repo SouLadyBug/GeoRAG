@@ -161,7 +161,7 @@ export default function Landing({ site, demos }: { site: SiteData | null; demos:
             <div className="eyebrow">GeoRAG-Bench</div>
             <h2 className="title">What each component buys</h2>
             <p className="lead">
-              Retrieval ablation on {full?.factual.n} factual and {full?.cross?.n} cross-domain questions. Same corpus, same questions; only the retrieval components change.
+              Retrieval ablation on {full?.factual.n} factual questions — as generated from their passages and reworded — and {full?.cross?.n} cross-domain questions that need two passages from different fields. Same corpus, same questions; only the retrieval components change.
             </p>
             <div className="card" style={{ marginTop: 28, padding: "18px 12px 8px" }}>
               <RetrievalChart site={site} metric="recall@5" />
