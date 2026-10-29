@@ -95,3 +95,9 @@ def test_otsu_bimodal():
         [np.random.default_rng(0).normal(-0.4, 0.05, 1000), np.random.default_rng(1).normal(0.5, 0.05, 1000)]
     )
     assert -0.35 < otsu_threshold(v) < 0.45
+
+
+def test_zone_edge_includes_neighbouring_zone():
+    # Lake Annecy sits just east of 6°E; Sentinel-2 covers it from zone 31 (31TGL), not 32TKR.
+    tiles = tiles_for_bbox((6.11, 45.78, 6.25, 45.92))
+    assert "31TGL" in tiles and "32TKR" in tiles

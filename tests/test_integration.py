@@ -138,3 +138,13 @@ def test_analyze_end_to_end(engine):
     assert res.ok, res.attempts[-1].stderr
     assert 1.0 < res.numbers["water_km2"] < 1.7
     assert res.numbers["iou_vs_reference"] > 0.7
+
+
+def test_design_drops_title_lines(engine):
+    md, sents = engine.design_agent._ground_markdown(
+        "**Risks and Limitations**\n\n- Point density varies [1].\nMethod:",
+        {1},
+        {1: engine.retriever.retrieve("LiDAR")[0][0]},
+    )
+    assert "Risks and Limitations" not in md and "Method:" not in md
+    assert len(sents) == 1

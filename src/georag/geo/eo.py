@@ -115,11 +115,14 @@ def utm_zone(lon: float, lat: float) -> int:
     return min(zone, 60)
 
 
-def mgrs_tile(lon: float, lat: float) -> str:
-    """Return the Sentinel-2 / MGRS 100 km tile id (e.g. ``32SNG``) containing a point."""
+def mgrs_tile(lon: float, lat: float, zone: int | None = None) -> str:
+    """Return the Sentinel-2 / MGRS 100 km tile id (e.g. ``32SNG``) containing a point.
+
+    ``zone`` forces a UTM zone, which is how a point is located in the neighbouring zone's grid.
+    """
     from pyproj import Transformer
 
-    zone = utm_zone(lon, lat)
+    zone = zone or utm_zone(lon, lat)
     band = _LAT_BANDS[min(int((lat + 80) // 8), len(_LAT_BANDS) - 1)]
     epsg = (32600 if lat >= 0 else 32700) + zone
     e, n = Transformer.from_crs(4326, epsg, always_xy=True).transform(lon, lat)
@@ -138,7 +141,15 @@ def tiles_for_bbox(bbox: BBox, samples: int = 5) -> list[str]:
         for j in range(samples):
             lon = lon0 + (lon1 - lon0) * i / (samples - 1)
             lat = lat0 + (lat1 - lat0) * j / (samples - 1)
+            zone = utm_zone(lon, lat)
             tiles[mgrs_tile(lon, lat)] = None
+            # Sentinel-2 does not produce every MGRS square at a zone edge: some areas are only
+            # covered by the overlapping tiles of the neighbouring zone, so look there too.
+            offset = (lon + 180) % 6
+            if offset < 1.0 and zone > 1:
+                tiles[mgrs_tile(lon, lat, zone - 1)] = None
+            elif offset > 5.0 and zone < 60:
+                tiles[mgrs_tile(lon, lat, zone + 1)] = None
     return list(tiles)
 
 

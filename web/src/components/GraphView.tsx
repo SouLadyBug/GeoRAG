@@ -28,9 +28,10 @@ interface Props {
   paths?: string[][];
   passages?: Record<string, Citation>;
   compact?: boolean;
+  maxLinks?: number;
 }
 
-export default function GraphView({ nodes, edges, paths = [], passages = {}, compact }: Props) {
+export default function GraphView({ nodes, edges, paths = [], passages = {}, compact, maxLinks = 3 }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const cy = useRef<Core | null>(null);
   const [picked, setPicked] = useState<{ kind: "edge" | "node"; data: any } | null>(null);
@@ -39,6 +40,15 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
     if (!el.current) return;
     const onPath = new Set<string>();
     for (const p of paths) for (let i = 0; i < p.length - 1; i++) onPath.add([p[i], p[i + 1]].sort().join("|"));
+    // Keep every path edge plus each concept's strongest links; the full co-mention graph is a hairball.
+    const keep = new Set<string>();
+    const byNode = new Map<string, GraphEdge[]>();
+    for (const e of edges) {
+      for (const n of [e.source, e.target]) byNode.set(n, [...(byNode.get(n) ?? []), e]);
+      if (onPath.has([e.source, e.target].sort().join("|"))) keep.add(`${e.source}__${e.target}`);
+    }
+    for (const list of byNode.values()) list.sort((a, b) => b.weight - a.weight).slice(0, maxLinks).forEach((e) => keep.add(`${e.source}__${e.target}`));
+    const shown = edges.filter((e) => keep.has(`${e.source}__${e.target}`));
     const maxDeg = Math.max(1, ...nodes.map((n) => n.degree));
     const inst = cytoscape({
       container: el.current,
@@ -46,7 +56,7 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
         ...nodes.map((n) => ({
           data: { id: n.id, label: n.label, type: n.type, size: 18 + 34 * Math.sqrt(n.degree / maxDeg), seed: n.seed ? 1 : 0, definition: n.definition, degree: n.degree },
         })),
-        ...edges.map((e) => ({
+        ...shown.map((e) => ({
           data: { id: `${e.source}__${e.target}`, source: e.source, target: e.target, weight: e.weight, chunks: e.chunks ?? [], path: onPath.has([e.source, e.target].sort().join("|")) ? 1 : 0 },
         })),
       ],
@@ -60,7 +70,7 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
             label: "data(label)",
             color: "#e2e8f0",
             "font-size": compact ? 9 : 11,
-            "font-family": "Inter, sans-serif",
+            "font-family": "Inter Variable, Inter, sans-serif",
             "font-weight": 600,
             "text-valign": "bottom",
             "text-margin-y": 5,
@@ -79,7 +89,7 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
         { selector: ":selected", style: { "border-width": 3, "border-color": "#2dd4bf", "line-color": "#5eead4" } as any },
         { selector: ".faded", style: { opacity: 0.12 } },
       ],
-      layout: { name: "cose", animate: true, animationDuration: 700, nodeRepulsion: () => 9000, idealEdgeLength: () => 90, gravity: 0.35, padding: 30 } as any,
+      layout: { name: "cose", animate: false, nodeRepulsion: () => 26000, idealEdgeLength: () => 110, nodeOverlap: 24, gravity: 0.25, numIter: 2500, padding: 36 } as any,
       wheelSensitivity: 0.25,
       minZoom: 0.3,
       maxZoom: 3,
@@ -101,8 +111,22 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
       }
     });
     cy.current = inst;
-    return () => inst.destroy();
-  }, [nodes, edges, paths, compact]);
+    // The panel may be hidden behind a tab when the graph is built: lay out again once it has a size.
+    let laidOut = (el.current?.clientWidth ?? 0) > 0;
+    const ro = new ResizeObserver(() => {
+      inst.resize();
+      if (!laidOut && (el.current?.clientWidth ?? 0) > 0) {
+        laidOut = true;
+        inst.layout({ name: "cose", animate: false, nodeRepulsion: () => 26000, idealEdgeLength: () => 110, nodeOverlap: 24, gravity: 0.25, numIter: 2500, padding: 36 } as any).run();
+      }
+      inst.fit(undefined, 36);
+    });
+    if (el.current) ro.observe(el.current);
+    return () => {
+      ro.disconnect();
+      inst.destroy();
+    };
+  }, [nodes, edges, paths, compact, maxLinks]);
 
   const types = Array.from(new Set(nodes.map((n) => n.type)));
 

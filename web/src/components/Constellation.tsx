@@ -64,7 +64,7 @@ export default function Constellation({ nodes, edges }: { nodes: GraphNode[]; ed
         if (p.r > 4.2) {
           ctx.globalAlpha = 0.55;
           ctx.fillStyle = "#cbd5e1";
-          ctx.font = "500 11px Inter, sans-serif";
+          ctx.font = "500 11px 'Inter Variable', Inter, sans-serif";
           ctx.fillText(p.label, p.x * w + p.r + 4, p.y * h + 4);
         }
         ctx.globalAlpha = 1;

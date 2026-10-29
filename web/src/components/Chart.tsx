@@ -8,14 +8,14 @@ echarts.use([BarChart, LineChart, ScatterChart, GridComponent, LegendComponent, 
 
 export const AXIS = {
   axisLine: { lineStyle: { color: "#334155" } },
-  axisLabel: { color: "#94a3b8", fontFamily: "Inter" },
+  axisLabel: { color: "#94a3b8", fontFamily: "Inter Variable, Inter, sans-serif" },
   splitLine: { lineStyle: { color: "rgba(148,163,184,0.08)" } },
 };
 
 export const TOOLTIP = {
   backgroundColor: "#0f1729",
   borderColor: "#334155",
-  textStyle: { color: "#e2e8f0", fontFamily: "Inter" },
+  textStyle: { color: "#e2e8f0", fontFamily: "Inter Variable, Inter, sans-serif" },
 };
 
 export default function Chart({ option, className = "chart" }: { option: any; className?: string }) {
@@ -23,7 +23,7 @@ export default function Chart({ option, className = "chart" }: { option: any; cl
   useEffect(() => {
     if (!el.current) return;
     const chart = echarts.init(el.current, undefined, { renderer: "svg" });
-    chart.setOption({ textStyle: { fontFamily: "Inter" }, animationDuration: 900, ...option });
+    chart.setOption({ textStyle: { fontFamily: "Inter Variable, Inter, sans-serif" }, animationDuration: 900, ...option });
     const ro = new ResizeObserver(() => chart.resize());
     ro.observe(el.current);
     return () => {

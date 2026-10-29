@@ -327,10 +327,15 @@ class DesignAgent:
         sentences_all = []
         for line in raw.strip().splitlines():
             stripped = line.strip()
-            if not stripped or stripped.startswith("#"):
-                out_lines.append(
-                    line if not stripped.startswith("#") else f"**{stripped.lstrip('# ').strip()}**"
-                )
+            if not stripped:
+                out_lines.append(line)
+                continue
+            # Headings and bold title lines repeat the section name; they are labels, not claims.
+            if (
+                stripped.startswith("#")
+                or re.fullmatch(r"\*\*[^*]{1,80}\*\*[.:]?", stripped)
+                or (stripped.endswith(":") and len(stripped.split()) <= 6)
+            ):
                 continue
             m = re.match(r"^(\s*(?:[-*+]|\d+[.)])\s+)(.*)$", line)
             prefix, body = (m.group(1), m.group(2)) if m else ("", line)

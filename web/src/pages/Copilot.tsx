@@ -169,7 +169,9 @@ function AnswerView({ turn, active, onCite }: { turn: Turn; active: number | nul
 function SourcesPanel({ citations, passages, active, onPick }: { citations: Citation[]; passages: Passage[]; active: number | null; onPick: (n: number) => void }) {
   const refs = useRef<Record<number, HTMLDivElement | null>>({});
   useEffect(() => {
-    if (active != null) refs.current[active]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const el = active != null ? refs.current[active] : null;
+    const box = el?.closest(".panel-scroll") as HTMLElement | null;
+    if (el && box) box.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
   }, [active]);
   if (!citations.length && !passages.length) return <div className="placeholder">Cited passages appear here. Click a citation chip to jump to its source.</div>;
   const cited = new Set(citations.map((c) => c.chunk_id));
@@ -258,7 +260,11 @@ export default function Copilot() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [demos]);
 
-  useEffect(() => threadEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }), [turns]);
+  useEffect(() => {
+    // Scroll the thread itself; scrollIntoView would also scroll the window.
+    const box = threadEnd.current?.parentElement;
+    box?.scrollTo({ top: box.scrollHeight, behavior: "smooth" });
+  }, [turns]);
 
   const live = !!health;
   const focus = [...turns].reverse().find((t) => t.result) ?? null;
