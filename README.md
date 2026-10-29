@@ -17,7 +17,18 @@ Cited answers · Sentinel-2 analyses that actually run · study designs · a kno
 
 </div>
 
-<!-- DEMO -->
+<p align="center"><img src="docs/assets/demo.gif" alt="Analyze mode: Sentinel-2 water extent at Lake Ichkeul, February 2020 vs February 2025" width="100%"></p>
+
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/ask.png" alt="Ask mode"><br><sub><b>Ask</b> — every sentence carries citations; the reranker checks each one against its source.</sub></td>
+<td width="50%"><img src="docs/assets/explore.png" alt="Explore mode"><br><sub><b>Explore</b> — concept paths between LiDAR and digital twins; every edge opens its passages.</sub></td>
+</tr>
+<tr>
+<td><img src="docs/assets/design.png" alt="Design mode"><br><sub><b>Design</b> — a cited six-section study brief with dataset links.</sub></td>
+<td><img src="docs/assets/ndvi.png" alt="NDVI analysis"><br><sub><b>Analyze</b> — July 2024 NDVI around Bizerte from four clear Sentinel-2 scenes.</sub></td>
+</tr>
+</table>
 
 ## Why
 
@@ -41,7 +52,60 @@ at retrieved passages. Analyze mode never writes free-form code: the model fills
 and dates come from the gazetteer or the request, and the script runs with a static check, CPU, memory
 and file-size limits, PEP 578 audit hooks and a host allow-list.
 
-<!-- RESULTS -->
+## Results — GeoRAG-Bench
+
+Measured on a CPU-only machine (4 threads, no GPU) with the CPU tier: Qwen3-4B-Instruct-2507 (Q4_K_M, llama.cpp),
+Qwen3-Embedding-0.6B and Qwen3-Reranker-0.6B. Every number comes from [`results/`](results/) and is explained in
+[`results/REPORT.md`](results/REPORT.md).
+
+**Benchmark:** 200 factual questions (40 per domain), 113 of them also reworded,
+27 cross-domain questions that need two passages from different fields, 30 out-of-scope
+questions and 30 Analyze tasks on 15 lakes with a JRC Global Surface Water reference.
+
+### Retrieval ablation
+
+| Configuration | Factual R@5 | Factual MRR@10 | Paraphrased R@5 | Paraphrased MRR@10 | Cross: both passages in top 8 | Cross nDCG@10 |
+|---|---:|---:|---:|---:|---:|---:|
+| BM25 | 0.995 | 0.971 | 0.920 | 0.844 | 0.963 | **0.944** |
+| Dense | 0.960 | 0.908 | 0.920 | 0.852 | 0.704 | 0.796 |
+| Hybrid (RRF) | 0.990 | 0.964 | **0.974** | 0.891 | 0.889 | 0.890 |
+| Hybrid + graph | 0.955 | 0.809 | 0.938 | 0.767 | 0.852 | 0.864 |
+| Hybrid + rerank | **1.000** | **0.980** | **0.974** | 0.927 | 0.963 | 0.927 |
+| Full: hybrid + graph + rerank | **1.000** | 0.980 | **0.974** | **0.931** | **1.000** | 0.927 |
+
+Questions generated from a passage reuse its words, so BM25 alone looks almost perfect on them. Reworded, BM25 and dense
+retrieval each drop to 0.92 Recall@5 while their fusion holds at 0.97. The graph on its own adds
+noise to narrow questions (MRR falls), but after reranking it is what lets the full system find **both** passages for
+every cross-domain question.
+
+<p align="center"><img src="results/ablation.png" alt="Retrieval ablation" width="100%"></p>
+
+### Grounded answers
+
+| Question set | n | Sentences supported by their citation | Citation precision | Gold passage cited | Answer recall | Refused |
+|---|---:|---:|---:|---:|---:|---:|
+| Factual | 100 | 96 % | 99 % | 99 % | 88 % | 6 % |
+| Cross-domain | 27 | 59 % | 89 % | 100 % | 48 % | 4 % |
+| Out of scope (should refuse) | 30 | — | — | — | — | **100 %** |
+| Factual, small generator (Qwen3-1.7B) | 50 | 52 % | 100 % | 94 % | 82 % | 0 % |
+
+Cross-domain synthesis is the open problem: the 4B model writes connecting sentences that no single passage supports,
+and the checker flags them. The 1.7B model refuses out-of-scope questions just as reliably but pads answers with
+uncited sentences.
+
+### Analyze: water area against JRC Global Surface Water
+
+**30 / 30 tasks executed** (100 % on the first attempt) · median area error
+**0.8 %** · 93 % of tasks within 10 % · mean IoU **0.966** · median
+81 s per task including planning and download. Deep, regulated lakes agree to within 1–3 %; the
+seasonal lakes Doiran and Ichkeul differ by 6–11 % from a 1984–2021 long-term reference, as they should.
+
+<p align="center"><img src="results/analyze_vs_jrc.png" alt="Analyze vs JRC" width="55%"></p>
+
+**Limitations** — synthetic questions favour lexical overlap; the corpus is abstracts and documentation, not full text;
+faithfulness is judged by a 0.6B cross-encoder, not people; Analyze tasks are single-step template analyses, and no parity
+with the complex multi-step tasks of GIS Copilot or GeoAnalystBench is claimed. Details in the [report](results/REPORT.md).
+
 
 ## Architecture
 
