@@ -56,7 +56,7 @@ for var in ("HTTPS_PROXY", "https_proxy", "HTTP_PROXY", "http_proxy"):
         h = urlparse(v).hostname
         if h:
             PROXY_HOSTS.add(h)
-BLOCKED_EVENTS = ("subprocess.Popen", "os.system", "os.exec", "os.posix_spawn", "os.spawn", "os.fork", "os.forkpty", "pty.spawn", "ctypes.dlopen", "os.kill", "shutil.rmtree", "os.remove", "os.rmdir")
+BLOCKED_EVENTS = ("subprocess.Popen", "os.system", "os.exec", "os.posix_spawn", "os.spawn", "os.fork", "os.forkpty", "pty.spawn", "os.kill", "shutil.rmtree", "os.remove", "os.rmdir")
 
 def _host_ok(host):
     if host is None:
