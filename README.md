@@ -11,24 +11,33 @@ Cited answers · Sentinel-2 analyses that actually run · study designs · a kno
 [**Live showcase**](https://emna-saada.github.io/GeoRAG/) · [Benchmark report](results/REPORT.md) · [Design notes](docs/design-notes.md)
 
 [![CI](https://github.com/emna-saada/GeoRAG/actions/workflows/ci.yml/badge.svg)](https://github.com/emna-saada/GeoRAG/actions/workflows/ci.yml)
-![Python](https://img.shields.io/badge/python-3.11%2B-2dd4bf)
-![License](https://img.shields.io/badge/code-Apache--2.0-2dd4bf)
-![Models](https://img.shields.io/badge/models-open--weight%2C%20local-2dd4bf)
+![Python](https://img.shields.io/badge/python-3.11%2B-1f5f99)
+![License](https://img.shields.io/badge/code-Apache--2.0-1f5f99)
+![Models](https://img.shields.io/badge/models-open--weight%2C%20local-1f5f99)
 
 </div>
 
-<p align="center"><img src="docs/assets/demo.gif" alt="Analyze mode: Sentinel-2 water extent at Lake Ichkeul, February 2020 vs February 2025" width="100%"></p>
+<p align="center"><img src="docs/assets/demo.gif" alt="Walkthrough: replaying the Lake Ichkeul analysis, switching map layers, opening the generated code, a cited answer and the knowledge graph" width="100%"></p>
+<p align="center"><sub>Screen recording of the showcase site (40 s). Full one-minute walkthrough: <a href="docs/assets/walkthrough.mp4">walkthrough.mp4</a>.</sub></p>
+
+### Screenshots
 
 <table>
 <tr>
-<td width="50%"><img src="docs/assets/ask.png" alt="Ask mode"><br><sub><b>Ask</b> — every sentence carries citations; the reranker checks each one against its source.</sub></td>
-<td width="50%"><img src="docs/assets/explore.png" alt="Explore mode"><br><sub><b>Explore</b> — concept paths between LiDAR and digital twins; every edge opens its passages.</sub></td>
+<td width="50%"><img src="docs/assets/analyze.png" alt="Analyze mode"><br><sub><b>Analyze</b> — the Ichkeul request: plan, sandboxed run, explanation, GeoTIFFs and the change layer on the map.</sub></td>
+<td width="50%"><img src="docs/assets/ask.png" alt="Ask mode"><br><sub><b>Ask</b> — every sentence cites its source; the passages are listed beside the answer.</sub></td>
 </tr>
 <tr>
-<td><img src="docs/assets/design.png" alt="Design mode"><br><sub><b>Design</b> — a cited six-section study brief with dataset links.</sub></td>
-<td><img src="docs/assets/ndvi.png" alt="NDVI analysis"><br><sub><b>Analyze</b> — July 2024 NDVI around Bizerte from four clear Sentinel-2 scenes.</sub></td>
+<td><img src="docs/assets/explore.png" alt="Explore mode"><br><sub><b>Explore</b> — concept paths between LiDAR and digital twins; every link opens its passages.</sub></td>
+<td><img src="docs/assets/design.png" alt="Design mode"><br><sub><b>Design</b> — a six-section study brief; statements not backed by a source are marked.</sub></td>
+</tr>
+<tr>
+<td><img src="docs/assets/benchmark.png" alt="Benchmark page"><br><sub><b>Benchmark</b> — every figure on the page is read from <code>results/</code>.</sub></td>
+<td><img src="docs/assets/sources.png" alt="Sources page"><br><sub><b>Sources</b> — the licence register: every indexed document with its licence and link.</sub></td>
 </tr>
 </table>
+
+<p align="center"><img src="web/public/demo/analyze-bizerte-ndvi/map.png" alt="NDVI around Bizerte, July 2024" width="100%"><br><sub>Analyze output: July 2024 NDVI around Bizerte from four clear Sentinel-2 scenes.</sub></p>
 
 ## Why
 
