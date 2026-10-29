@@ -8,14 +8,14 @@ const STYLE: maplibregl.StyleSpecification = {
   sources: {
     carto: {
       type: "raster",
-      tiles: ["https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"],
+      tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"],
       tileSize: 256,
       attribution: "© OpenStreetMap contributors © CARTO",
     },
   },
   layers: [
-    { id: "bg", type: "background", paint: { "background-color": "#05080f" } },
-    { id: "carto", type: "raster", source: "carto", paint: { "raster-opacity": 0.9 } },
+    { id: "bg", type: "background", paint: { "background-color": "#e9e6df" } },
+    { id: "carto", type: "raster", source: "carto", paint: { "raster-opacity": 1 } },
   ],
 };
 
@@ -120,7 +120,7 @@ export default function MapPanel({ result, assetBase }: { result: AnalyzeResult 
                 <div className="big">
                   {n.water_km2_a?.toFixed(1)} → {n.water_km2_b?.toFixed(1)} <span style={{ fontSize: 15 }} className="muted">km²</span>
                 </div>
-                <div style={{ color: n.change_km2 >= 0 ? "var(--good)" : "var(--bad)", fontWeight: 650 }}>
+                <div style={{ color: n.change_km2 >= 0 ? "var(--gain)" : "var(--loss)", fontWeight: 700 }}>
                   {n.change_km2 >= 0 ? "+" : ""}
                   {n.change_km2?.toFixed(1)} km² ({n.change_pct >= 0 ? "+" : ""}
                   {n.change_pct?.toFixed(0)} %)
@@ -173,9 +173,9 @@ export default function MapPanel({ result, assetBase }: { result: AnalyzeResult 
             </div>
             {overlays.some((o) => o.label === "Change") && overlay?.endsWith("change") && (
               <div className="legend">
-                <span><i style={{ background: "#38bdf8" }} />water in both</span>
-                <span><i style={{ background: "#22c55e" }} />gained</span>
-                <span><i style={{ background: "#f43f5e" }} />lost</span>
+                <span><i style={{ background: "#9ecae1" }} />water in both</span>
+                <span><i style={{ background: "#1a9641" }} />gained</span>
+                <span><i style={{ background: "#c62828" }} />lost</span>
               </div>
             )}
           </div>

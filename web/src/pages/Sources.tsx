@@ -25,10 +25,10 @@ const DOMAINS: Record<string, string> = {
 
 function licenceLabel(l: string | null) {
   if (!l) return "—";
-  const m = l.match(/licenses\/([a-z-]+)\/([\d.]+)/);
+  if (l.includes("arxiv.org/licenses/nonexclusive")) return "arXiv non-exclusive";
+  const m = l.match(/creativecommons\.org\/licenses\/([a-z-]+)\/([\d.]+)/);
   if (m) return `CC ${m[1].toUpperCase()} ${m[2]}`;
   if (l.includes("publicdomain/zero")) return "CC0 1.0";
-  if (l.includes("arxiv.org/licenses/nonexclusive")) return "arXiv non-exclusive";
   return l.length > 40 ? `${l.slice(0, 40)}…` : l;
 }
 

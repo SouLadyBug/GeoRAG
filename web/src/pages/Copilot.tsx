@@ -1,7 +1,7 @@
 import hljs from "highlight.js/lib/core";
 import python from "highlight.js/lib/languages/python";
-import "highlight.js/styles/github-dark-dimmed.css";
-import { BookOpen, Code2, FlaskConical, Map as MapIcon, MessageSquareText, Network, Send, Sparkles, Square, Wand2 } from "lucide-react";
+import "highlight.js/styles/github.css";
+import { BookOpen, Code2, FlaskConical, Map as MapIcon, MessageSquareText, Network, Send, Square, Wand2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { asset, detectBackend, type Health, loadDemos, replayDemo, runLive } from "../api";
 import { CitedMarkdown, CitedSentences } from "../components/Cited";
@@ -83,7 +83,7 @@ function AnswerView({ turn, active, onCite }: { turn: Turn; active: number | nul
         </div>
         {a.related.length > 0 && (
           <div className="meta-row">
-            <span className="faint" style={{ fontSize: 12 }}>Related in the graph:</span>
+            <span className="faint" style={{ fontSize: 13.5 }}>Related concepts:</span>
             {a.related.map((x) => (
               <span key={x} className="chip entity">{x}</span>
             ))}
@@ -96,18 +96,18 @@ function AnswerView({ turn, active, onCite }: { turn: Turn; active: number | nul
     const d = r as DesignResult;
     return (
       <div>
-        <h3 style={{ fontSize: 17, marginBottom: 14 }}>{d.title}</h3>
+        <h3 style={{ fontSize: 20, marginBottom: 14 }}>{d.title}</h3>
         {d.sections.map((s) => (
           <div className="design-sec" key={s.key}>
             <h4>
               {s.heading}
-              {s.supported_ratio != null && <span className={`chip ${s.supported_ratio >= 0.99 ? "good" : "warn"}`} style={{ fontSize: 11 }}>{Math.round(s.supported_ratio * 100)} % supported</span>}
+              {s.supported_ratio != null && <span className={`chip ${s.supported_ratio >= 0.99 ? "good" : "warn"}`} style={{ fontSize: 12 }}>{Math.round(s.supported_ratio * 100)} % backed by a source</span>}
             </h4>
             <CitedMarkdown markdown={s.markdown} onPick={onCite} />
           </div>
         ))}
         <div className="meta-row">
-          {d.faithfulness != null && <span className="chip good">{Math.round(d.faithfulness * 100)} % of statements supported</span>}
+          {d.faithfulness != null && <span className="chip">{Math.round(d.faithfulness * 100)} % of statements backed by a cited source</span>}
           <span className="chip">{d.citations.length} references</span>
         </div>
       </div>
@@ -129,7 +129,7 @@ function AnswerView({ turn, active, onCite }: { turn: Turn; active: number | nul
             ))}
         </div>
         {x.paths.slice(0, 4).map((p, i) => (
-          <div key={i} className="mono" style={{ fontSize: 12.5, color: "var(--muted)", marginBottom: 4 }}>
+          <div key={i} className="mono" style={{ fontSize: 13, color: "var(--ink-2)", marginBottom: 4 }}>
             {p.map((id) => label[id]?.label ?? id).join("  →  ")}
           </div>
         ))}
@@ -199,7 +199,7 @@ function SourcesPanel({ citations, passages, active, onPick }: { citations: Cita
           .map((p) => (
             <div key={p.chunk.chunk_id} className="src" style={{ gridTemplateColumns: "1fr" }}>
               <div>
-                <div className="t" style={{ fontWeight: 550 }}>{p.chunk.title}</div>
+                <div className="t" style={{ fontWeight: 500 }}>{p.chunk.title}</div>
                 <div className="s">
                   {p.chunk.domain.replace("_", " ")} · {Object.entries(p.sources).map(([k, v]) => `${k} #${v}`).join(" · ")}
                   {p.rerank_score != null && ` · rerank ${p.rerank_score.toFixed(2)}`}
@@ -363,7 +363,7 @@ export default function Copilot() {
         <div className="side-h">Engine</div>
         <div className="status-pill" style={{ width: "100%" }}>
           <span className={`dot ${live ? "live" : "demo"}`} />
-          {health === undefined ? "Connecting…" : live ? `Live · ${health!.llm.model}` : "Showcase · recorded runs"}
+          {health === undefined ? "Connecting…" : live ? `Live · ${health!.llm.model}` : "Recorded runs (static site)"}
         </div>
       </aside>
 
@@ -372,12 +372,14 @@ export default function Copilot() {
           {turns.length === 0 ? (
             <div className="empty">
               <div>
-                <div className="avatar bot" style={{ width: 48, height: 48, margin: "0 auto 16px", borderRadius: 14 }}>
-                  <Sparkles size={22} />
+                <div className="empty-icon">
+                  <BookOpen size={30} aria-hidden="true" />
                 </div>
-                <h3>Ask the geospatial literature — and the satellites</h3>
+                <h3>Ask the literature, or ask for a map</h3>
                 <p style={{ maxWidth: 460, margin: "0 auto" }}>
-                  Cited answers, executable Sentinel-2 analyses, study designs and a knowledge graph across GIS, remote sensing, LiDAR, digital twins and geospatial computer vision.
+                  {live
+                    ? "Type a question below, or choose a mode on the left."
+                    : "This copy of the site replays recorded runs. Choose one on the left to see how each mode works."}
                 </p>
               </div>
             </div>
@@ -385,17 +387,12 @@ export default function Copilot() {
             turns.map((t) => (
               <div className="turn" key={t.id}>
                 <div className="q">
-                  <div className="avatar user">You</div>
+                  <div className="who">Question</div>
                   <div className="bubble">{t.question}</div>
                 </div>
-                <div className="a">
-                  <div className="avatar bot">G</div>
+                <div className="a" aria-live="polite">
                   <div className="body">
-                    {t.mode && (
-                      <div className="route-tag">
-                        <b>{t.mode}</b>
-                      </div>
-                    )}
+                    <div className="route-tag">{t.mode ? `GeoRAG · ${t.mode}` : "GeoRAG"}</div>
                     <Steps turn={t} />
                     <AnswerView turn={t} active={t === focus ? active : null} onCite={onCite} />
                   </div>
@@ -410,7 +407,8 @@ export default function Copilot() {
             <textarea
               rows={1}
               value={input}
-              placeholder={live ? "Ask a question, request an analysis, a study design, or how two concepts connect…" : "Showcase mode: pick a recorded run on the left (or run GeoRAG locally)"}
+              placeholder={live ? "Ask a question, request a map, a study design, or how two concepts connect" : "Run GeoRAG locally to ask your own questions"}
+              aria-label="Question"
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {

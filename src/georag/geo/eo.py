@@ -600,6 +600,20 @@ def save_overlay(path: Path | str, rgba: np.ndarray) -> Path:
     return path
 
 
+# ColorBrewer colours shared by the web overlays and the static figures.
+WATER = "#2b8cbe"
+WATER_STABLE = "#9ecae1"
+GAIN = "#1a9641"
+LOSS = "#d7191c"
+LAND = "#f0efe9"
+INK = "#1c1c1a"
+
+
+def _hex_rgba(color: str, alpha: int) -> tuple[int, int, int, int]:
+    color = color.lstrip("#")
+    return (int(color[0:2], 16), int(color[2:4], 16), int(color[4:6], 16), alpha)
+
+
 def web_layers(
     out_dir: Path | str,
     comp: Composite,
@@ -616,7 +630,7 @@ def web_layers(
     if mask is not None:
         m, _ = _to_lonlat(mask.astype(np.float32), comp.grid)
         rgba = np.zeros((*m.shape, 4), np.uint8)
-        rgba[m > 0.5] = (34, 211, 238, 210)
+        rgba[m > 0.5] = _hex_rgba(WATER, 215)
         layers["water"] = save_overlay(out / f"{prefix}water.png", rgba).name
     if comp.index_name == "NDVI":
         import matplotlib
@@ -629,11 +643,31 @@ def web_layers(
     if change is not None:
         c, _ = _to_lonlat(change.astype(np.float32), comp.grid)
         rgba = np.zeros((*c.shape, 4), np.uint8)
-        rgba[c == 1] = (34, 197, 94, 230)  # gained water
-        rgba[c == -1] = (244, 63, 94, 230)  # lost water
-        rgba[c == 2] = (56, 189, 248, 120)  # stable water
+        rgba[c == 1] = _hex_rgba(GAIN, 235)
+        rgba[c == -1] = _hex_rgba(LOSS, 235)
+        rgba[c == 2] = _hex_rgba(WATER_STABLE, 170)
         layers["change"] = save_overlay(out / "change.png", rgba).name
     return {"bounds": list(bounds), "layers": layers}
+
+
+def _figure_style(ax, label: str, title: str) -> None:
+    ax.set_title(title, loc="left", fontsize=11, color=INK, pad=6)
+    ax.text(
+        0.0,
+        1.0,
+        label,
+        transform=ax.transAxes,
+        fontsize=11,
+        fontweight="bold",
+        va="bottom",
+        ha="right",
+        color=INK,
+    )
+    ax.tick_params(colors="#4a4843", labelsize=8, length=3)
+    ax.set_xlabel("km", color="#4a4843", fontsize=9)
+    for sp in ax.spines.values():
+        sp.set_color("#4a4843")
+        sp.set_linewidth(0.8)
 
 
 def figure_water_change(
@@ -652,51 +686,44 @@ def figure_water_change(
     from matplotlib.colors import ListedColormap
     from matplotlib.patches import Patch
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5.4), facecolor="#0b1120")
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.6), facecolor="white")
     extent = (0, a.grid.width * a.grid.resolution / 1000, 0, a.grid.height * a.grid.resolution / 1000)
-    for ax, comp, mask in ((axes[0], a, mask_a), (axes[1], b, mask_b)):
+    for ax, comp, mask, label in ((axes[0], a, mask_a, "(a)"), (axes[1], b, mask_b, "(b)")):
         ax.imshow(_rgb_uint8(comp.rgb), extent=extent)
         ov = np.ma.masked_where(~mask, mask)
-        ax.imshow(ov, cmap=ListedColormap(["#22d3ee"]), alpha=0.55, extent=extent, interpolation="nearest")
+        ax.imshow(ov, cmap=ListedColormap([WATER]), alpha=0.6, extent=extent, interpolation="nearest")
         km2 = mask.sum() * comp.grid.pixel_area_m2 / 1e6
-        ax.set_title(f"{comp.month}  ·  water {km2:.1f} km²", color="white", fontsize=12)
+        _figure_style(ax, label, f"  {comp.month}: open water {km2:.1f} km²")
     change = np.zeros(mask_a.shape, np.int8)
     change[mask_a & mask_b] = 2
     change[~mask_a & mask_b] = 1
     change[mask_a & ~mask_b] = -1
-    cmap = ListedColormap(["#f43f5e", "#1e293b", "#22c55e", "#38bdf8"])
+    cmap = ListedColormap([LOSS, LAND, GAIN, WATER_STABLE])
     axes[2].imshow(change, cmap=cmap, vmin=-1.5, vmax=2.5, extent=extent, interpolation="nearest")
-    axes[2].set_title(
-        f"change  ·  {stats['change_km2']:+.1f} km² ({stats['change_pct']:+.0f} %)",
-        color="white",
-        fontsize=12,
-    )
+    _figure_style(axes[2], "(c)", f"  Change: {stats['change_km2']:+.1f} km² ({stats['change_pct']:+.0f} %)")
     axes[2].legend(
         handles=[
-            Patch(color="#38bdf8", label="water both"),
-            Patch(color="#22c55e", label="gained"),
-            Patch(color="#f43f5e", label="lost"),
+            Patch(facecolor=WATER_STABLE, edgecolor="#4a4843", linewidth=0.5, label="water in both"),
+            Patch(facecolor=GAIN, edgecolor="#4a4843", linewidth=0.5, label="became water"),
+            Patch(facecolor=LOSS, edgecolor="#4a4843", linewidth=0.5, label="dried out"),
         ],
         loc="lower left",
         fontsize=9,
-        framealpha=0.6,
+        frameon=True,
+        fancybox=False,
+        edgecolor="#4a4843",
+        framealpha=1,
     )
-    for ax in axes:
-        ax.set_facecolor("#0b1120")
-        ax.tick_params(colors="#94a3b8", labelsize=8)
-        ax.set_xlabel("km", color="#94a3b8", fontsize=9)
-        for s in ax.spines.values():
-            s.set_color("#334155")
-    fig.suptitle(title, color="white", fontsize=14, y=0.99)
+    fig.suptitle(title, x=0.01, ha="left", fontsize=13, color=INK, y=0.99)
     fig.text(
         0.01,
         0.01,
-        "Sentinel-2 L2A (Copernicus), median of clear scenes, SCL cloud mask. MNDWI > threshold.",
-        color="#64748b",
+        "Data: Copernicus Sentinel-2 L2A. Monthly median of clear scenes, SCL cloud mask; water where MNDWI > threshold.",
+        color="#6f6c65",
         fontsize=8,
     )
-    fig.tight_layout()
-    fig.savefig(path, dpi=130, facecolor=fig.get_facecolor())
+    fig.tight_layout(rect=(0, 0.03, 1, 0.97))
+    fig.savefig(path, dpi=130, facecolor="white")
     plt.close(fig)
     return Path(path)
 
@@ -707,7 +734,7 @@ def figure_index(path: Path | str, comp: Composite, title: str, mask: np.ndarray
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5.6), facecolor="#0b1120")
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5.4), facecolor="white")
     extent = (
         0,
         comp.grid.width * comp.grid.resolution / 1000,
@@ -715,7 +742,7 @@ def figure_index(path: Path | str, comp: Composite, title: str, mask: np.ndarray
         comp.grid.height * comp.grid.resolution / 1000,
     )
     axes[0].imshow(_rgb_uint8(comp.rgb), extent=extent)
-    axes[0].set_title(f"true colour · {comp.month}", color="white")
+    _figure_style(axes[0], "(a)", f"  True colour, {comp.month}")
     cmap = "RdYlGn" if comp.index_name == "NDVI" else "BrBG"
     im = axes[1].imshow(
         comp.index,
@@ -725,19 +752,21 @@ def figure_index(path: Path | str, comp: Composite, title: str, mask: np.ndarray
         extent=extent,
     )
     if mask is not None:
-        axes[1].contour(mask, levels=[0.5], colors="#22d3ee", linewidths=0.6, extent=extent, origin="upper")
-    axes[1].set_title(comp.index_name, color="white")
+        axes[1].contour(mask, levels=[0.5], colors=INK, linewidths=0.6, extent=extent, origin="upper")
+    _figure_style(axes[1], "(b)", f"  {comp.index_name}")
     cb = fig.colorbar(im, ax=axes[1], fraction=0.046, pad=0.03)
-    cb.ax.tick_params(colors="#94a3b8")
-    for ax in axes:
-        ax.set_facecolor("#0b1120")
-        ax.tick_params(colors="#94a3b8", labelsize=8)
-        ax.set_xlabel("km", color="#94a3b8", fontsize=9)
-        for s in ax.spines.values():
-            s.set_color("#334155")
-    fig.suptitle(title, color="white", fontsize=14)
-    fig.tight_layout()
-    fig.savefig(path, dpi=130, facecolor=fig.get_facecolor())
+    cb.ax.tick_params(colors="#4a4843", labelsize=8)
+    cb.outline.set_edgecolor("#4a4843")
+    fig.suptitle(title, x=0.01, ha="left", fontsize=13, color=INK)
+    fig.text(
+        0.01,
+        0.01,
+        "Data: Copernicus Sentinel-2 L2A, monthly median of clear scenes, SCL cloud mask.",
+        color="#6f6c65",
+        fontsize=8,
+    )
+    fig.tight_layout(rect=(0, 0.03, 1, 0.97))
+    fig.savefig(path, dpi=130, facecolor="white")
     plt.close(fig)
     return Path(path)
 

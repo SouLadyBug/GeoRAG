@@ -49,7 +49,7 @@ export function CitedMarkdown({ markdown, onPick }: { markdown: string; onPick: 
           .map((n) => `<span class="cite" data-n="${n}">${n}</span>`)
           .join(""),
       )
-      .replace(/ ⚠/g, ' <span class="chip warn" title="not supported by the cited passage" style="padding:0 6px;font-size:11px">unsupported</span>');
+      .replace(/ ⚠/g, ' <span class="chip warn" title="No cited passage supports this statement" style="padding:0 6px;font-size:12px">not in sources</span>');
   }, [markdown]);
   return (
     <div

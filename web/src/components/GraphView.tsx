@@ -2,14 +2,15 @@ import cytoscape, { type Core } from "cytoscape";
 import { useEffect, useRef, useState } from "react";
 import type { Citation, GraphEdge, GraphNode } from "../types";
 
+// ColorBrewer "Dark2" — distinct, print-safe categorical colours.
 export const TYPE_COLORS: Record<string, string> = {
-  method: "#a78bfa",
-  sensor: "#38bdf8",
-  dataset: "#f59e0b",
-  product: "#34d399",
-  application: "#fb7185",
-  place: "#facc15",
-  standard: "#94a3b8",
+  method: "#7570b3",
+  sensor: "#1b9e77",
+  dataset: "#d95f02",
+  product: "#66a61e",
+  application: "#e7298a",
+  place: "#a6761d",
+  standard: "#666666",
 };
 
 const TYPE_LABEL: Record<string, string> = {
@@ -64,29 +65,30 @@ export default function GraphView({ nodes, edges, paths = [], passages = {}, com
         {
           selector: "node",
           style: {
-            "background-color": (ele: any) => TYPE_COLORS[ele.data("type")] ?? "#94a3b8",
+            "background-color": (ele: any) => TYPE_COLORS[ele.data("type")] ?? "#666666",
             width: "data(size)",
             height: "data(size)",
             label: "data(label)",
-            color: "#e2e8f0",
-            "font-size": compact ? 9 : 11,
-            "font-family": "Inter Variable, Inter, sans-serif",
+            color: "#1c1c1a",
+            "font-size": compact ? 10 : 12,
+            "font-family": "Source Sans 3, Helvetica, Arial, sans-serif",
             "font-weight": 600,
             "text-valign": "bottom",
             "text-margin-y": 5,
-            "text-outline-color": "#060a13",
+            "text-outline-color": "#ffffff",
             "text-outline-width": 2.5,
-            "border-width": 0,
-            "background-opacity": 0.92,
+            "background-opacity": 1,
+            "border-width": 1,
+            "border-color": "#ffffff",
           } as any,
         },
-        { selector: "node[seed = 1]", style: { "border-width": 3, "border-color": "#ffffff", "font-size": compact ? 11 : 13, "z-index": 10 } as any },
+        { selector: "node[seed = 1]", style: { "border-width": 3, "border-color": "#1c1c1a", "font-size": compact ? 11 : 13, "z-index": 10 } as any },
         {
           selector: "edge",
-          style: { width: (ele: any) => 0.6 + 4 * ele.data("weight"), "line-color": "#334155", opacity: 0.7, "curve-style": "haystack" } as any,
+          style: { width: (ele: any) => 0.6 + 4 * ele.data("weight"), "line-color": "#b8b2a6", opacity: 0.8, "curve-style": "haystack" } as any,
         },
-        { selector: "edge[path = 1]", style: { "line-color": "#2dd4bf", opacity: 1, "z-index": 5 } as any },
-        { selector: ":selected", style: { "border-width": 3, "border-color": "#2dd4bf", "line-color": "#5eead4" } as any },
+        { selector: "edge[path = 1]", style: { "line-color": "#1f5f99", width: 3.5, opacity: 1, "z-index": 5 } as any },
+        { selector: ":selected", style: { "border-width": 3, "border-color": "#1f5f99", "line-color": "#174872" } as any },
         { selector: ".faded", style: { opacity: 0.12 } },
       ],
       layout: { name: "cose", animate: false, nodeRepulsion: () => 26000, idealEdgeLength: () => 110, nodeOverlap: 24, gravity: 0.25, numIter: 2500, padding: 36 } as any,

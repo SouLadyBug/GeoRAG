@@ -18,17 +18,17 @@ export function RetrievalChart({ site, metric }: { site: SiteData; metric: "reca
   const cross = names.map((n) => configs[n].summary.cross?.[metric] ?? null);
   const paraConfigs = site.benchmark.retrieval_paraphrased?.configs;
   const para = paraConfigs ? names.map((n) => paraConfigs[n]?.summary.paraphrased?.[metric] ?? null) : null;
-  const label = { show: true, position: "top", color: "#cbd5e1", fontSize: 10, formatter: (p: any) => (p.value == null ? "" : `${Math.round(p.value * 100)}`) };
+  const label = { show: true, position: "top", color: "#4a4843", fontSize: 11, formatter: (p: any) => (p.value == null ? "" : `${Math.round(p.value * 100)}`) };
   const option = {
     grid: { left: 50, right: 20, top: 40, bottom: 40 },
     tooltip: { ...TOOLTIP, trigger: "axis", valueFormatter: (v: number) => (v == null ? "—" : v.toFixed(3)) },
-    legend: { top: 0, textStyle: { color: "#94a3b8" }, itemWidth: 12, itemHeight: 12 },
+    legend: { top: 0, itemGap: 22, textStyle: { color: "#1c1c1a", fontSize: 13 }, itemWidth: 12, itemHeight: 12 },
     xAxis: { type: "category", data: names.map((n) => SHORT[n] ?? n), ...AXIS },
     yAxis: { type: "value", min: 0, max: 1, ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: (v: number) => `${Math.round(v * 100)}%` } },
     series: [
-      { name: "Factual · generated wording", type: "bar", data: fact, barMaxWidth: 26, itemStyle: { color: "#2dd4bf", borderRadius: [4, 4, 0, 0] }, label },
-      ...(para ? [{ name: "Factual · paraphrased", type: "bar", data: para, barMaxWidth: 26, itemStyle: { color: "#a78bfa", borderRadius: [4, 4, 0, 0] }, label }] : []),
-      { name: metric === "recall@5" ? "Cross-domain · both passages" : "Cross-domain", type: "bar", data: cross, barMaxWidth: 26, itemStyle: { color: "#38bdf8", borderRadius: [4, 4, 0, 0] }, label },
+      { name: "Factual", type: "bar", data: fact, barMaxWidth: 26, itemStyle: { color: "#1f5f99" }, label },
+      ...(para ? [{ name: "Factual, reworded", type: "bar", data: para, barMaxWidth: 26, itemStyle: { color: "#9ecae1" }, label }] : []),
+      { name: metric === "recall@5" ? "Cross-domain (both passages)" : "Cross-domain", type: "bar", data: cross, barMaxWidth: 26, itemStyle: { color: "#d95f02" }, label },
     ],
   };
   return <Chart option={option} />;
@@ -41,11 +41,11 @@ function AnalyzeScatter({ items }: { items: any[] }) {
   const option = {
     grid: { left: 60, right: 24, top: 20, bottom: 50 },
     tooltip: { ...TOOLTIP, formatter: (p: any) => `${p.data[2]} · ${p.data[3]}<br/>GeoRAG ${p.data[1].toFixed(1)} km² · JRC ${p.data[0].toFixed(1)} km²` },
-    xAxis: { type: "log", name: "JRC GSW reference (km²)", nameLocation: "middle", nameGap: 30, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS, axisLabel: tick },
-    yAxis: { type: "log", name: "GeoRAG Analyze (km²)", nameLocation: "middle", nameGap: 44, nameTextStyle: { color: "#94a3b8" }, min: 0.5, max, ...AXIS, axisLabel: tick },
+    xAxis: { type: "log", name: "JRC GSW reference (km²)", nameLocation: "middle", nameGap: 30, nameTextStyle: { color: "#4a4843" }, min: 0.5, max, ...AXIS, axisLabel: tick },
+    yAxis: { type: "log", name: "GeoRAG Analyze (km²)", nameLocation: "middle", nameGap: 44, nameTextStyle: { color: "#4a4843" }, min: 0.5, max, ...AXIS, axisLabel: tick },
     series: [
-      { type: "line", data: [[0.5, 0.5], [max, max]], showSymbol: false, lineStyle: { color: "#475569", type: "dashed" }, silent: true },
-      { type: "scatter", symbolSize: 11, data: ok.map((r) => [r.reference_km2, r.water_km2, r.lake, r.month]), itemStyle: { color: "#2dd4bf", borderColor: "#060a13", borderWidth: 1 } },
+      { type: "line", data: [[0.5, 0.5], [max, max]], showSymbol: false, lineStyle: { color: "#8a857a", type: "dashed" }, silent: true },
+      { type: "scatter", symbolSize: 11, data: ok.map((r) => [r.reference_km2, r.water_km2, r.lake, r.month]), itemStyle: { color: "#1f5f99", borderColor: "#ffffff", borderWidth: 1 } },
     ],
   };
   return <Chart option={option} className="chart tall" />;
@@ -58,7 +58,7 @@ function CorpusChart({ site }: { site: SiteData }) {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     xAxis: { type: "category", data: years, ...AXIS },
     yAxis: { type: "value", ...AXIS },
-    series: [{ type: "bar", data: years.map((y) => site.corpus.papers_by_year[y]), itemStyle: { color: "#2dd4bf", borderRadius: [4, 4, 0, 0] }, barMaxWidth: 26 }],
+    series: [{ type: "bar", data: years.map((y) => site.corpus.papers_by_year[y]), itemStyle: { color: "#1f5f99" }, barMaxWidth: 26 }],
   };
   return <Chart option={option} className="chart" />;
 }

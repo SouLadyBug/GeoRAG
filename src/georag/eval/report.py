@@ -20,13 +20,16 @@ SHORT = {
     "Hybrid + rerank": "+ rerank",
     "Full: hybrid + graph + rerank": "Full",
 }
-DARK = {
-    "bg": "#0b1120",
-    "fg": "#e2e8f0",
-    "muted": "#94a3b8",
-    "grid": "#1e293b",
-    "a": "#2dd4bf",
-    "b": "#38bdf8",
+# Paper-style palette; bar colours from ColorBrewer (Blues and Dark2).
+PALETTE = {
+    "bg": "#ffffff",
+    "fg": "#1c1c1a",
+    "muted": "#4a4843",
+    "grid": "#e3dfd6",
+    "spine": "#4a4843",
+    "a": "#1f5f99",
+    "p": "#9ecae1",
+    "b": "#d95f02",
 }
 
 
@@ -35,17 +38,18 @@ def _load(path: Path):
 
 
 def _style(ax):
-    ax.set_facecolor(DARK["bg"])
-    ax.tick_params(colors=DARK["muted"])
-    for s in ax.spines.values():
-        s.set_color(DARK["grid"])
-    ax.yaxis.grid(True, color=DARK["grid"], lw=0.8)
+    ax.set_facecolor(PALETTE["bg"])
+    ax.tick_params(colors=PALETTE["muted"])
+    for name, s in ax.spines.items():
+        s.set_color(PALETTE["spine"])
+        s.set_visible(name in ("left", "bottom"))
+    ax.yaxis.grid(True, color=PALETTE["grid"], lw=0.8)
     ax.set_axisbelow(True)
 
 
 def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) -> Path:
     names = list(retrieval["configs"])
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.6), facecolor=DARK["bg"])
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.6), facecolor=PALETTE["bg"])
     for ax, (metric, title) in zip(
         axes, (("recall@5", "Recall@5"), ("mrr@10", "MRR@10"), ("ndcg@10", "nDCG@10")), strict=True
     ):
@@ -55,7 +59,7 @@ def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) 
             (
                 "factual (generated wording)",
                 [retrieval["configs"][n]["summary"]["factual"][metric] for n in names],
-                DARK["a"],
+                PALETTE["a"],
             )
         ]
         if paraphrased:
@@ -66,21 +70,31 @@ def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) 
                         paraphrased["configs"][n]["summary"].get("paraphrased", {}).get(metric, 0)
                         for n in names
                     ],
-                    "#a78bfa",
+                    PALETTE["p"],
                 )
             )
         series.append(
             (
                 "cross-domain",
                 [retrieval["configs"][n]["summary"].get("cross", {}).get(metric, 0) for n in names],
-                DARK["b"],
+                PALETTE["b"],
             )
         )
         w = 0.8 / len(series)
         groups = []
         for j, (label, vals, color) in enumerate(series):
             offs = (j - (len(series) - 1) / 2) * w
-            groups.append(ax.bar([i + offs for i in x], vals, w, color=color, label=label))
+            groups.append(
+                ax.bar(
+                    [i + offs for i in x],
+                    vals,
+                    w,
+                    color=color,
+                    label=label,
+                    edgecolor=PALETTE["spine"],
+                    linewidth=0.4,
+                )
+            )
         for bars in groups:
             for b in bars:
                 ax.text(
@@ -88,12 +102,12 @@ def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) 
                     b.get_height() + 0.012,
                     f"{b.get_height():.2f}",
                     ha="center",
-                    color=DARK["fg"],
+                    color=PALETTE["fg"],
                     fontsize=7.5,
                 )
         ax.set_xticks(list(x), [SHORT.get(n, n) for n in names], fontsize=8.5)
         ax.set_ylim(0, 1.05)
-        ax.set_title(title, color=DARK["fg"])
+        ax.set_title(title, color=PALETTE["fg"])
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(
         handles,
@@ -101,37 +115,38 @@ def ablation_chart(retrieval: dict, out: Path, paraphrased: dict | None = None) 
         loc="lower center",
         ncol=len(labels),
         frameon=False,
-        labelcolor=DARK["fg"],
+        labelcolor=PALETTE["fg"],
         fontsize=10,
     )
-    fig.suptitle("GeoRAG-Bench retrieval ablation", color=DARK["fg"], fontsize=14)
+    fig.suptitle("GeoRAG-Bench retrieval ablation", color=PALETTE["fg"], fontsize=14)
     fig.tight_layout(rect=(0, 0.07, 1, 1))
-    fig.savefig(out, dpi=140, facecolor=DARK["bg"])
+    fig.savefig(out, dpi=140, facecolor=PALETTE["bg"])
     plt.close(fig)
     return out
 
 
 def analyze_chart(analyze: dict, out: Path) -> Path:
     ok = [r for r in analyze["items"] if r.get("ok") and r.get("reference_km2")]
-    fig, ax = plt.subplots(figsize=(6.2, 5.6), facecolor=DARK["bg"])
+    fig, ax = plt.subplots(figsize=(6.2, 5.6), facecolor=PALETTE["bg"])
     _style(ax)
-    ax.xaxis.grid(True, color=DARK["grid"], lw=0.8)
+    ax.xaxis.grid(True, color=PALETTE["grid"], lw=0.8)
     xs = [r["reference_km2"] for r in ok]
     ys = [r["water_km2"] for r in ok]
     lim = (min(xs + ys) * 0.7, max(xs + ys) * 1.4)
-    ax.plot(lim, lim, ls="--", color=DARK["muted"], lw=1)
-    ax.scatter(xs, ys, s=46, color=DARK["a"], edgecolor=DARK["bg"], zorder=3)
+    ax.plot(lim, lim, ls="--", color=PALETTE["muted"], lw=1)
+    ax.scatter(xs, ys, s=46, color=PALETTE["a"], edgecolor=PALETTE["bg"], zorder=3)
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xlim(lim)
     ax.set_ylim(lim)
-    ax.set_xlabel("JRC Global Surface Water, occurrence ≥ 50 % (km²)", color=DARK["muted"])
-    ax.set_ylabel("GeoRAG Analyze, Sentinel-2 MNDWI (km²)", color=DARK["muted"])
+    ax.set_xlabel("JRC Global Surface Water, occurrence ≥ 50 % (km²)", color=PALETTE["muted"])
+    ax.set_ylabel("GeoRAG Analyze, Sentinel-2 MNDWI (km²)", color=PALETTE["muted"])
     ax.set_title(
-        f"{len(ok)} lake-month tasks · median error {analyze['median_abs_pct_error']:.1f} %", color=DARK["fg"]
+        f"{len(ok)} lake-month tasks · median error {analyze['median_abs_pct_error']:.1f} %",
+        color=PALETTE["fg"],
     )
     fig.tight_layout()
-    fig.savefig(out, dpi=140, facecolor=DARK["bg"])
+    fig.savefig(out, dpi=140, facecolor=PALETTE["bg"])
     plt.close(fig)
     return out
 

@@ -35,23 +35,33 @@ export default function App() {
   }, []);
 
   const link = (to: string, label: string) => (
-    <a href={`#${to}`} className={route === to ? "active" : ""}>
+    <a href={`#${to}`} className={route === to ? "active" : ""} aria-current={route === to ? "page" : undefined}>
       {label}
     </a>
   );
 
   return (
     <>
-      <div className="bg-grid" />
-      <nav className="nav">
-        <a className="brand" href="#/">
-          <span className="brand-mark">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#031016" strokeWidth="2.4" strokeLinecap="round">
-              <circle cx="12" cy="12" r="8.5" />
-              <path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5s1.2-6.1 3.8-8.5z" />
-            </svg>
-          </span>
-          GeoRAG <small>Copilot</small>
+      {/* Hash routing owns the URL fragment, so the skip link moves focus instead of navigating. */}
+      <a
+        className="skip"
+        href="#/"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("main")?.focus();
+        }}
+      >
+        Skip to content
+      </a>
+      <nav className="nav" aria-label="Main">
+        <a className="brand" href="#/" aria-label="GeoRAG Copilot, overview">
+          <svg className="brand-mark" viewBox="0 0 24 24" fill="none" stroke="#1f5f99" strokeWidth="1.6" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <ellipse cx="12" cy="12" rx="4.5" ry="10" />
+            <path d="M2 12h20M4 6.5h16M4 17.5h16" />
+          </svg>
+          <b>GeoRAG</b>
+          <small>Copilot</small>
         </a>
         <div className="nav-links">
           {link("/", "Overview")}
@@ -60,15 +70,16 @@ export default function App() {
           {link("/sources", "Sources")}
         </div>
         <div className="nav-right">
-          <span className="status-pill">
+          <span className="status-pill" title={live ? "Connected to a local GeoRAG server" : "Static site: recorded runs are replayed"}>
             <span className={`dot ${live ? "live" : "demo"}`} />
-            {live == null ? "…" : live ? "Live engine" : "Showcase"}
+            {live == null ? "…" : live ? "Live engine" : "Recorded runs"}
           </span>
           <a className="btn small" href="https://github.com/emna-saada/GeoRAG" target="_blank" rel="noreferrer">
-            <Github size={14} /> GitHub
+            <Github size={15} aria-hidden="true" /> Source code
           </a>
         </div>
       </nav>
+      <div id="main" tabIndex={-1} />
       {route === "/copilot" ? (
         <Copilot />
       ) : (
