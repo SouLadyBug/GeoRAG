@@ -1,0 +1,30 @@
+{
+  "factual": {
+    "n": 100,
+    "refusal_rate": 0.06,
+    "answered": 94,
+    "faithfulness": 0.9624,
+    "citation_precision": 0.9947,
+    "gold_cited": 0.9894,
+    "token_f1": 0.2703,
+    "answer_recall": 0.8814,
+    "median_seconds": 52.785
+  },
+  "cross": {
+    "n": 27,
+    "refusal_rate": 0.037,
+    "answered": 26,
+    "faithfulness": 0.5853,
+    "citation_precision": 0.8868,
+    "gold_cited": 1.0,
+    "token_f1": 0.451,
+    "answer_recall": 0.4807,
+    "median_seconds": 96.24
+  },
+  "unanswerable": {
+    "n": 30,
+    "refusal_rate": 1.0,
+    "answered": 0
+  },
+  "generator": "qwen3-4b"
+}

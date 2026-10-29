@@ -1,0 +1,632 @@
+{
+  "n": 30,
+  "success_rate": 1.0,
+  "first_try_success_rate": 1.0,
+  "mean_repairs": 0.0,
+  "median_abs_pct_error": 0.82,
+  "mean_iou": 0.966,
+  "within_10pct": 0.9333,
+  "median_seconds": 80.9,
+  "items": [
+    {
+      "id": "lake-bled-2020-08",
+      "lake": "Lake Bled",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 1.418,
+      "reference_km2": 1.286,
+      "abs_pct_error": 10.26,
+      "iou": 0.8721,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-08"
+      ],
+      "seconds": 72.1
+    },
+    {
+      "id": "lake-bled-2024-08",
+      "lake": "Lake Bled",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 1.374,
+      "reference_km2": 1.286,
+      "abs_pct_error": 6.84,
+      "iou": 0.896,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-07",
+        "2024-08-12",
+        "2024-08-17"
+      ],
+      "seconds": 75.0
+    },
+    {
+      "id": "lake-bohinj-2020-08",
+      "lake": "Lake Bohinj",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 2.951,
+      "reference_km2": 2.934,
+      "abs_pct_error": 0.58,
+      "iou": 0.932,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-08",
+        "2020-08-21",
+        "2020-08-01"
+      ],
+      "seconds": 58.2
+    },
+    {
+      "id": "lake-bohinj-2024-08",
+      "lake": "Lake Bohinj",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 2.9,
+      "reference_km2": 2.934,
+      "abs_pct_error": 1.16,
+      "iou": 0.9283,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-25",
+        "2024-08-07",
+        "2024-08-12",
+        "2024-08-15"
+      ],
+      "seconds": 65.1
+    },
+    {
+      "id": "lac-du-bourget-2020-08",
+      "lake": "Lac du Bourget",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 43.565,
+      "reference_km2": 43.088,
+      "abs_pct_error": 1.11,
+      "iou": 0.9841,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-07",
+        "2020-08-20",
+        "2020-08-05",
+        "2020-08-15"
+      ],
+      "seconds": 80.8
+    },
+    {
+      "id": "lac-du-bourget-2024-08",
+      "lake": "Lac du Bourget",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 43.462,
+      "reference_km2": 43.088,
+      "abs_pct_error": 0.87,
+      "iou": 0.9844,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-24",
+        "2024-08-29",
+        "2024-08-06",
+        "2024-08-09"
+      ],
+      "seconds": 67.0
+    },
+    {
+      "id": "lake-neuchatel-2020-08",
+      "lake": "Lake Neuch\u00e2tel",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 220.166,
+      "reference_km2": 219.433,
+      "abs_pct_error": 0.33,
+      "iou": 0.9888,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-07",
+        "2020-08-07"
+      ],
+      "seconds": 125.0
+    },
+    {
+      "id": "lake-neuchatel-2024-08",
+      "lake": "Lake Neuch\u00e2tel",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 219.905,
+      "reference_km2": 219.433,
+      "abs_pct_error": 0.22,
+      "iou": 0.9889,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-11",
+        "2024-08-06",
+        "2024-08-11",
+        "2024-08-11"
+      ],
+      "seconds": 175.3
+    },
+    {
+      "id": "lake-lugano-2020-08",
+      "lake": "Lake Lugano",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 31.182,
+      "reference_km2": 31.136,
+      "abs_pct_error": 0.15,
+      "iou": 0.9788,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-09",
+        "2020-08-09",
+        "2020-08-19",
+        "2020-08-19"
+      ],
+      "seconds": 76.5
+    },
+    {
+      "id": "lake-lugano-2024-08",
+      "lake": "Lake Lugano",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 31.331,
+      "reference_km2": 31.136,
+      "abs_pct_error": 0.63,
+      "iou": 0.9783,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-28",
+        "2024-08-03",
+        "2024-08-28",
+        "2024-08-03"
+      ],
+      "seconds": 68.8
+    },
+    {
+      "id": "lake-como-2020-08",
+      "lake": "Lake Como",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 134.076,
+      "reference_km2": 133.933,
+      "abs_pct_error": 0.11,
+      "iou": 0.9826,
+      "observed_fraction": 0.9909,
+      "scenes": [
+        "2020-08-09",
+        "2020-08-09"
+      ],
+      "seconds": 82.7
+    },
+    {
+      "id": "lake-como-2024-08",
+      "lake": "Lake Como",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 134.638,
+      "reference_km2": 133.933,
+      "abs_pct_error": 0.53,
+      "iou": 0.9812,
+      "observed_fraction": 0.9476,
+      "scenes": [
+        "2024-08-28",
+        "2024-08-03",
+        "2024-08-08",
+        "2024-08-28"
+      ],
+      "seconds": 101.1
+    },
+    {
+      "id": "lake-garda-2020-08",
+      "lake": "Lake Garda",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 371.615,
+      "reference_km2": 368.743,
+      "abs_pct_error": 0.78,
+      "iou": 0.988,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-01",
+        "2020-08-09",
+        "2020-08-06",
+        "2020-08-11"
+      ],
+      "seconds": 117.4
+    },
+    {
+      "id": "lake-garda-2024-08",
+      "lake": "Lake Garda",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 371.912,
+      "reference_km2": 368.743,
+      "abs_pct_error": 0.86,
+      "iou": 0.9878,
+      "observed_fraction": 0.9974,
+      "scenes": [
+        "2024-08-30",
+        "2024-08-08",
+        "2024-08-28",
+        "2024-08-13"
+      ],
+      "seconds": 101.9
+    },
+    {
+      "id": "lake-trasimeno-2020-08",
+      "lake": "Lake Trasimeno",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 120.238,
+      "reference_km2": 120.193,
+      "abs_pct_error": 0.04,
+      "iou": 0.9931,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-01",
+        "2020-08-21",
+        "2020-08-16",
+        "2020-08-23"
+      ],
+      "seconds": 86.4
+    },
+    {
+      "id": "lake-trasimeno-2024-08",
+      "lake": "Lake Trasimeno",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 118.554,
+      "reference_km2": 120.193,
+      "abs_pct_error": 1.36,
+      "iou": 0.9817,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-25",
+        "2024-08-07",
+        "2024-08-30",
+        "2024-08-12"
+      ],
+      "seconds": 80.2
+    },
+    {
+      "id": "lake-bolsena-2020-08",
+      "lake": "Lake Bolsena",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 113.816,
+      "reference_km2": 113.631,
+      "abs_pct_error": 0.16,
+      "iou": 0.994,
+      "observed_fraction": 0.9999,
+      "scenes": [
+        "2020-08-01",
+        "2020-08-21",
+        "2020-08-16",
+        "2020-08-23"
+      ],
+      "seconds": 81.8
+    },
+    {
+      "id": "lake-bolsena-2024-08",
+      "lake": "Lake Bolsena",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 113.784,
+      "reference_km2": 113.631,
+      "abs_pct_error": 0.13,
+      "iou": 0.9931,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-25",
+        "2024-08-07",
+        "2024-08-30",
+        "2024-08-12"
+      ],
+      "seconds": 86.7
+    },
+    {
+      "id": "lake-bracciano-2020-08",
+      "lake": "Lake Bracciano",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 56.598,
+      "reference_km2": 56.804,
+      "abs_pct_error": 0.36,
+      "iou": 0.9921,
+      "observed_fraction": 0.9999,
+      "scenes": [
+        "2020-08-21",
+        "2020-08-21",
+        "2020-08-16",
+        "2020-08-16"
+      ],
+      "seconds": 76.3
+    },
+    {
+      "id": "lake-bracciano-2024-08",
+      "lake": "Lake Bracciano",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 56.746,
+      "reference_km2": 56.804,
+      "abs_pct_error": 0.1,
+      "iou": 0.9916,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-25",
+        "2024-08-25",
+        "2024-08-30",
+        "2024-08-30"
+      ],
+      "seconds": 81.1
+    },
+    {
+      "id": "lake-ohrid-2020-08",
+      "lake": "Lake Ohrid",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 355.022,
+      "reference_km2": 354.69,
+      "abs_pct_error": 0.09,
+      "iou": 0.9958,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-04",
+        "2020-08-14",
+        "2020-08-29",
+        "2020-08-24"
+      ],
+      "seconds": 91.4
+    },
+    {
+      "id": "lake-ohrid-2024-08",
+      "lake": "Lake Ohrid",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 354.987,
+      "reference_km2": 354.69,
+      "abs_pct_error": 0.08,
+      "iou": 0.9958,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-13",
+        "2024-08-08",
+        "2024-08-23",
+        "2024-08-03"
+      ],
+      "seconds": 80.4
+    },
+    {
+      "id": "lake-kinneret-2020-08",
+      "lake": "Lake Kinneret",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 165.421,
+      "reference_km2": 162.318,
+      "abs_pct_error": 1.91,
+      "iou": 0.98,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-18",
+        "2020-08-23",
+        "2020-08-13",
+        "2020-08-03"
+      ],
+      "seconds": 80.7
+    },
+    {
+      "id": "lake-kinneret-2024-08",
+      "lake": "Lake Kinneret",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 167.05,
+      "reference_km2": 162.318,
+      "abs_pct_error": 2.92,
+      "iou": 0.9703,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-22",
+        "2024-08-02",
+        "2024-08-17",
+        "2024-08-12"
+      ],
+      "seconds": 74.3
+    },
+    {
+      "id": "lake-doiran-2020-08",
+      "lake": "Lake Doiran",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 40.778,
+      "reference_km2": 37.198,
+      "abs_pct_error": 9.62,
+      "iou": 0.912,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-31",
+        "2020-08-11",
+        "2020-08-26",
+        "2020-08-21"
+      ],
+      "seconds": 72.4
+    },
+    {
+      "id": "lake-doiran-2024-08",
+      "lake": "Lake Doiran",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 39.77,
+      "reference_km2": 37.198,
+      "abs_pct_error": 6.91,
+      "iou": 0.9317,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-15",
+        "2024-08-05",
+        "2024-08-10"
+      ],
+      "seconds": 64.0
+    },
+    {
+      "id": "lake-ichkeul-2020-08",
+      "lake": "Lake Ichkeul",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 76.613,
+      "reference_km2": 81.426,
+      "abs_pct_error": 5.91,
+      "iou": 0.9383,
+      "observed_fraction": 0.9998,
+      "scenes": [
+        "2020-08-11",
+        "2020-08-01",
+        "2020-08-26",
+        "2020-08-06"
+      ],
+      "seconds": 109.8
+    },
+    {
+      "id": "lake-ichkeul-2024-08",
+      "lake": "Lake Ichkeul",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 72.154,
+      "reference_km2": 81.426,
+      "abs_pct_error": 11.39,
+      "iou": 0.8783,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-25",
+        "2024-08-10",
+        "2024-08-30",
+        "2024-08-05"
+      ],
+      "seconds": 105.1
+    },
+    {
+      "id": "lake-annecy-2020-08",
+      "lake": "Lake Annecy",
+      "month": "2020-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 26.344,
+      "reference_km2": 26.105,
+      "abs_pct_error": 0.92,
+      "iou": 0.9805,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2020-08-07",
+        "2020-08-20",
+        "2020-08-05",
+        "2020-08-15"
+      ],
+      "seconds": 100.3
+    },
+    {
+      "id": "lake-annecy-2024-08",
+      "lake": "Lake Annecy",
+      "month": "2024-08",
+      "ok": true,
+      "attempts": 1,
+      "repairs": 0,
+      "errors": [],
+      "water_km2": 26.337,
+      "reference_km2": 26.105,
+      "abs_pct_error": 0.89,
+      "iou": 0.9797,
+      "observed_fraction": 1.0,
+      "scenes": [
+        "2024-08-24",
+        "2024-08-29",
+        "2024-08-06",
+        "2024-08-09"
+      ],
+      "seconds": 87.0
+    }
+  ]
+}

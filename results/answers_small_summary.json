@@ -1,0 +1,19 @@
+{
+  "factual": {
+    "n": 50,
+    "refusal_rate": 0.0,
+    "answered": 50,
+    "faithfulness": 0.5173,
+    "citation_precision": 1.0,
+    "gold_cited": 0.94,
+    "token_f1": 0.0995,
+    "answer_recall": 0.8223,
+    "median_seconds": 46.16
+  },
+  "unanswerable": {
+    "n": 30,
+    "refusal_rate": 1.0,
+    "answered": 0
+  },
+  "generator": "qwen3-1.7b"
+}
