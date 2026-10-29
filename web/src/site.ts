@@ -13,7 +13,7 @@ export interface MetricRow {
 
 export interface SiteData {
   generated: string;
-  author?: { name: string; github: string; linkedin?: string | null };
+  authors?: { name: string; github?: string | null; linkedin?: string | null }[];
   models: { generator: string; generator_small?: string | null; embedding: string; reranker: string; tier: string; hardware: string };
   corpus: { documents: number; papers: number; chunks: number; by_domain: Record<string, number>; by_source: Record<string, number>; papers_by_year: Record<string, number>; year_range: string; open_licence_papers: number };
   graph: { nodes: number; edges: number; types: Record<string, number> };

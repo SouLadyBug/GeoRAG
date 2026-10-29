@@ -218,8 +218,8 @@ results/        every number shown in this README and on the site
 ## Citation
 
 ```bibtex
-@software{saada_georag_2026,
-  author  = {Saada, Emna},
+@software{saada_hamdani_georag_2026,
+  author  = {Saada, Emna and Hamdani, Souhe},
   title   = {GeoRAG Copilot: A Local Graph-and-Vector Retrieval-Augmented Agent that Turns Geospatial Literature into Executable Earth-Observation Workflows},
   year    = {2026},
   url     = {https://github.com/emna-saada/GeoRAG},
@@ -227,4 +227,4 @@ results/        every number shown in this README and on the site
 }
 ```
 
-<sub>Emna Saada · geospatial data science · [github.com/emna-saada](https://github.com/emna-saada)</sub>
+<sub>Built by **Emna Saada** ([github.com/emna-saada](https://github.com/emna-saada)) and **Souhe Hamdani** · geospatial data science</sub>

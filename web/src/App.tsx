@@ -78,7 +78,7 @@ export default function App() {
             <div className="container" style={{ display: "flex", justifyContent: "space-between", gap: 20, flexWrap: "wrap" }}>
               <span>GeoRAG Copilot · code Apache-2.0 · glossary CC BY 4.0 · Sentinel-2 data © Copernicus · {site?.generated ? `results generated ${site.generated}` : ""}</span>
               <span>
-                Emna Saada · <a href="https://github.com/emna-saada">github.com/emna-saada</a>
+                Emna Saada &amp; Souhe Hamdani · <a href="https://github.com/emna-saada/GeoRAG">github.com/emna-saada/GeoRAG</a>
               </span>
             </div>
           </footer>

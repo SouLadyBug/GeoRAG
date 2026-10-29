@@ -5,6 +5,8 @@ type: software
 authors:
   - family-names: Saada
     given-names: Emna
+  - family-names: Hamdani
+    given-names: Souhe
 repository-code: "https://github.com/emna-saada/GeoRAG"
 license: Apache-2.0
 version: 0.1.0

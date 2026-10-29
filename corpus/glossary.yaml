@@ -1,4 +1,4 @@
-# GeoRAG seed glossary — CC BY 4.0, Emna Saada.
+# GeoRAG seed glossary — CC BY 4.0, Emna Saada and Souhe Hamdani.
 # Entity types: method, sensor (sensor or platform), dataset, product (index or derived
 # product), application, place, standard (file format, specification or software).
 # `aliases` are matched in the corpus as whole words; all-caps aliases are case-sensitive.

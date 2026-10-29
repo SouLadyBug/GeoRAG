@@ -305,7 +305,10 @@ def build_site_json(
         compute = [json.loads(line) for line in log.read_text().splitlines() if line.strip()]
     site = {
         "generated": time.strftime("%Y-%m-%d"),
-        "author": {"name": "Emna Saada", "github": "https://github.com/emna-saada", "linkedin": None},
+        "authors": [
+            {"name": "Emna Saada", "github": "https://github.com/emna-saada", "linkedin": None},
+            {"name": "Souhe Hamdani", "github": None, "linkedin": None},
+        ],
         "models": models,
         "corpus": {
             "documents": corpus.get("documents"),

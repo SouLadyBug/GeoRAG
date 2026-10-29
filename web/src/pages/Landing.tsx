@@ -246,20 +246,36 @@ export default function Landing({ site, demos }: { site: SiteData | null; demos:
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="card author">
-            <div className="pic">ES</div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 17 }}>Emna Saada</div>
-              <div className="muted" style={{ fontSize: 14.5 }}>Geospatial data science — GIS, remote sensing, LiDAR, digital twins and computer vision.</div>
-              <div style={{ display: "flex", gap: 14, marginTop: 6, fontSize: 14 }}>
-                <a href="https://github.com/emna-saada" target="_blank" rel="noreferrer">GitHub</a>
-                {site?.author?.linkedin && (
-                  <a href={site.author.linkedin} target="_blank" rel="noreferrer">
-                    LinkedIn
-                  </a>
-                )}
+          <div className="grid-2">
+            {(site?.authors ?? [
+              { name: "Emna Saada", github: "https://github.com/emna-saada" },
+              { name: "Souhe Hamdani", github: null },
+            ]).map((a) => (
+              <div className="card author" key={a.name}>
+                <div className="pic">
+                  {a.name
+                    .split(" ")
+                    .map((w) => w[0])
+                    .join("")}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 17 }}>{a.name}</div>
+                  <div className="muted" style={{ fontSize: 14.5 }}>Geospatial data science — GIS, remote sensing, LiDAR, digital twins and computer vision.</div>
+                  <div style={{ display: "flex", gap: 14, marginTop: 6, fontSize: 14 }}>
+                    {a.github && (
+                      <a href={a.github} target="_blank" rel="noreferrer">
+                        GitHub
+                      </a>
+                    )}
+                    {a.linkedin && (
+                      <a href={a.linkedin} target="_blank" rel="noreferrer">
+                        LinkedIn
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
